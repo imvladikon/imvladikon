@@ -16,6 +16,7 @@ I am also interested in Speech Recognition and Multimodal Learning.
 
 * [**`t5-english-ner`**](https://huggingface.co/imvladikon/t5-english-ner) - NER model that based on T5 encoder that was trained on extremely small dataset.
 * [**`sentence-transformers-alephbert`**](https://huggingface.co/imvladikon/sentence-transformers-alephbert) - Sentence Transformers model that based on AlephBERT model for sentence similarity tasks.
+* [**`het5_small_summarization`**](https://huggingface.co/imvladikon/het5_small_summarization) - mt5-small based summarization model for Hebrew
 
 #### Speech Recognition:
 
