@@ -1,8 +1,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
 <div style="font-family: &quot;Fira Code script=latin rev=1&quot;; font-weight: 515; font-style: normal; font-variant-ligatures: normal;">
 <h2> Hi</h2>
-<p>I'm Vladimir Gurevich, Machine Learning Engineer, focused on NLP (IR, Semantic Search, NER/RE, etc.)</p>
-I am also interested in Speech Recognition and Multimodal Learning.
+<p>I'm Vladimir Gurevich, ML/NLP Engineer (IR tasks, such as Semantic Search, Information Extraction tasks, such as NER, Relation Extraction, etc.).</p>
+I am also interested in Speech Recognition and in LLMs.
 </div>
 
 
@@ -29,6 +29,7 @@ I am also interested in Speech Recognition and Multimodal Learning.
 
 * [**`Speech Recognition Dataset for Hebrew (kan)`**](https://huggingface.co/datasets/imvladikon/hebrew_speech_kan)
 * [**`Speech Recognition Dataset for Hebrew (coursera)`**](https://huggingface.co/datasets/imvladikon/hebrew_speech_coursera)
+* [**`Speech Recognition Dataset for Hebrew (campus)`**](https://huggingface.co/datasets/imvladikon/hebrew_speech_campus)
 
 
 ### Contacts 
