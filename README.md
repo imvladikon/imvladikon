@@ -11,7 +11,8 @@ I am also interested in Speech Recognition and in LLMs.
 * [**`jupyter-notebook-viewer`**](https://github.com/imvladikon/jupyter-notebook-viewer) - Jupyter Notebook Viewer for local files *.ipynb in browser without Jupyter Notebook installation.
 * [**`wav2vec2-hebrew`**](https://github.com/imvladikon/wav2vec2-hebrew) - package for speech recognition in Hebrew language using wav2vec2 models that were trained on Hebrew datasets (check out the datasets below). 
 * [**`distiller`**](https://github.com/imvladikon/distiller) - distillation TextClassification and TokenClassification models using transformers library with different distillation methods. 
-
+* [**`spacy-trankit`**](https://github.com/imvladikon/spacy-trankit) - spacy wrapper for Trankit (NLP pipeline for tokenization+dependency parsing+lemmatization, etc.)
+  
 ### Models:
 
 * [**`t5-english-ner`**](https://huggingface.co/imvladikon/t5-english-ner) - NER model that based on T5 encoder that was trained on extremely small dataset.
