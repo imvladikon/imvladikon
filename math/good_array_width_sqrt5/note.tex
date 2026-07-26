@@ -1,0 +1,911 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper,margin=1.25cm]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\abovedisplayskip}{5pt plus 1pt minus 1pt}
+\setlength{\belowdisplayskip}{5pt plus 1pt minus 1pt}
+\setlength{\abovedisplayshortskip}{3pt plus 1pt minus 1pt}
+\setlength{\belowdisplayshortskip}{3pt plus 1pt minus 1pt}
+
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\sumi}{\sum_{i=1}^{n}}
+\newcommand{\W}{\operatorname{width}}
+\newcommand{\fr}{\operatorname{frac}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\normZ}[1]{\left\lVert #1\right\rVert_{\ZZ}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries The width of an \(n\)-good array}\\[0.35em]
+{\large golden conjugates, an unreachable integer, and how far you must miss it}
+\end{center}
+
+\textbf{Problem.} For an integer \(n\ge4\), call a real tuple
+\((x_1,\dots,x_n)\) an \emph{\(n\)-good array} if
+\[
+\sumi x_i=n,\qquad \sumi x_i^2=2n,\qquad \sumi x_i^3=3n,
+\]
+and let \(\W(x)=\max_i x_i-\min_i x_i\).
+\begin{enumerate}
+\item[(1)] Find the largest real \(C\) with \(\W(x)\ge C\) for every
+\(n\ge4\) and every \(n\)-good array.
+\item[(2)] For that \(C\), prove that some \(\lambda>0\) satisfies
+\(\W(x)>C+\lambda n^{-3/2}\) for every \(n\ge4\) and every \(n\)-good
+array.
+\end{enumerate}
+
+\[
+\boxed{\displaystyle
+C=\sqrt5;
+\qquad
+\W(x)>\sqrt5+\frac{\lambda}{n^{3/2}}
+\ \text{ holds with }\ \lambda=\tfrac18. }
+\]
+Sections 1--9 prove both statements. Sections 10--13 are a separate,
+numerical study of how far the exponent \(\frac32\) and the constant
+\(\lambda\) can be pushed; the results there are stated as conjectures,
+with the evidence given.
+
+\textbf{Overview.}
+The three conditions are not independent constraints to be juggled: they
+are a disguised statement about the golden ratio. Let
+\[
+\varphi=\frac{1+\sqrt5}{2},\qquad a=\frac{1-\sqrt5}{2},
+\]
+the two roots of \(t^2=t+1\), so that also \(t^3=2t+1\) for \(t\in\{a,\varphi\}\).
+If \emph{every} \(x_i\) lies in \(\{a,\varphi\}\), then
+\[
+\sumi x_i^2=\sumi x_i+n,
+\qquad
+\sumi x_i^3=2\sumi x_i+n,
+\]
+so the first condition \(\sum x_i=n\) forces the other two automatically.
+Such an array is \(n\)-good, has width \(\varphi-a=\sqrt5\), and is the
+only possible way to achieve width \(\sqrt5\).
+
+But it cannot exist. If \(k\) entries equal \(\varphi\) and \(n-k\) equal
+\(a\), then \(\sum x_i=n\) reads \(k\sqrt5=n(1-a)\), i.e.
+\[
+k=np,\qquad p:=\frac{1-a}{\sqrt5}=\frac{5+\sqrt5}{10}=0.7236\ldots,
+\]
+and \(np\) is irrational, never an integer. The ideal configuration is
+arithmetically forbidden, so \(\W>\sqrt5\) strictly. It can still be
+approached, because \(np\) can be made arbitrarily close to an integer.
+That is part (1).
+
+Part (2) asks how badly the near-misses must fail, and the answer is
+governed by how close \(np\) can be to \(\ZZ\). Since \(p\) is a
+quadratic irrational, \(\normZ{np}\ge\frac2{5n}\); and an array of width
+\(\sqrt5(1+\eta)\) can be shown to force \(\normZ{np}\ll n^2\eta^2\).
+Comparing the two gives \(\eta\gg n^{-3/2}\).
+
+Sections 10--13 then ask what the narrowest \(n\)-good array actually
+looks like. Numerically it has three distinct values, and its width
+follows a parametric law
+\(M_n=\sqrt5+\sqrt5\,\Phi(\{np\})/n+O(n^{-2})\) rather than a single power
+of \(n\): the excess is of order \(\frac1n\) for most \(n\) and drops to
+order \(n^{-3/2}\) only along the odd-index Lucas numbers, where
+\(\{np\}\) is closest to \(1\). None of this is proved here, and Section
+12 states precisely what would be needed.
+
+\section*{1. Normalisation: send \(\{a,\varphi\}\) to \(\{0,1\}\)}
+
+Put
+\[
+x_i=a+\sqrt5\,u_i,
+\qquad\text{equivalently}\qquad
+u_i=\frac{x_i-a}{\sqrt5},
+\qquad
+\W(x)=\sqrt5\,\W(u),
+\tag{1}
+\]
+so that \(x_i=a\) corresponds to \(u_i=0\) and \(x_i=\varphi\) to
+\(u_i=1\).
+
+\textbf{Lemma 1.} With \(p=\frac{5+\sqrt5}{10}\), the tuple \(x\) is
+\(n\)-good if and only if
+\[
+\boxed{\displaystyle \sumi u_i=\sumi u_i^2=\sumi u_i^3=np .}
+\tag{2}
+\]
+
+\textit{Proof.} Use \(a^2=a+1\) and \(a^3=2a+1\). Expanding (1),
+\[
+\sumi x_i=na+\sqrt5\sumi u_i,
+\]
+so \(\sum x_i=n\) is \(\sum u_i=\frac{n(1-a)}{\sqrt5}=np\). Next,
+\[
+\sumi x_i^2=na^2+2a\sqrt5\sumi u_i+5\sumi u_i^2 ,
+\]
+and substituting \(a^2=a+1\) and \(\sum u_i=np=\frac{n(1-a)}{\sqrt5}\),
+\[
+5\sumi u_i^2=2n-n(a+1)-2an(1-a)=n(1-a)(1-2a)=n(1-a)\sqrt5,
+\]
+since \(1-2a=\sqrt5\); hence \(\sum u_i^2=\frac{n(1-a)}{\sqrt5}=np\).
+Similarly
+\[
+\sumi x_i^3=na^3+3a^2\sqrt5\sumi u_i+15a\sumi u_i^2+5\sqrt5\sumi u_i^3 ,
+\]
+and using \(a^3=2a+1\), \(a^2=a+1\) and \(3a(1+\sqrt5)=-6\),
+\[
+5\sqrt5\sumi u_i^3=n(1-a)\bigl[2-3a^2-3\sqrt5\,a\bigr]=5n(1-a),
+\]
+so \(\sum u_i^3=np\). Every step is reversible. \(\square\)
+
+The three inhomogeneous conditions have become one homogeneous statement:
+\emph{the first three power sums of \(u\) coincide}. The specific value
+\(np\) they share is the entire arithmetic content of the problem.
+
+\section*{2. The test polynomial}
+
+Let
+\[
+q(t)=t(1-t).
+\]
+By (2),
+\[
+\sumi q(u_i)=\sumi u_i-\sumi u_i^2=0,
+\qquad
+\sumi u_i\,q(u_i)=\sumi u_i^2-\sumi u_i^3=0 .
+\tag{3}
+\]
+So \(q\) has mean zero against both the counting measure and the measure
+weighted by \(u\). Since \(q\ge0\) exactly on \([0,1]\), the first
+identity in (3) already says that the \(u_i\) cannot all lie strictly
+inside \([0,1]\) unless they sit at the endpoints. The two identities
+together pin both ends.
+
+\textbf{Lemma 2.} Let \(m=\min_i u_i\) and \(M=\max_i u_i\). Then
+\(M\ge1\) and \(m\le0\).
+
+\textit{Proof.} Suppose \(M<1\). Then \(1-u_i>0\) for all \(i\), so by (3)
+\[
+0=\sumi u_i\,q(u_i)=\sumi u_i^2(1-u_i)
+\]
+is a sum of non-negative terms; hence \(u_i^2(1-u_i)=0\), i.e. \(u_i=0\)
+for every \(i\). But then \(\sum u_i=0\ne np\).
+
+Suppose \(m>0\). Subtracting the two identities in (3),
+\[
+0=\sumi(u_i-1)q(u_i)=-\sumi u_i(u_i-1)^2 ,
+\]
+again a sum of non-negative terms since \(u_i>0\); hence \(u_i=1\) for
+every \(i\), and \(\sum u_i=n\ne np\) because \(p\ne1\). \(\square\)
+
+\section*{3. Part (1), lower bound: \(\W(x)>\sqrt5\)}
+
+By Lemma 2,
+\[
+\W(u)=M-m\ge1-0=1 .
+\]
+Suppose \(\W(u)=1\). Then \(m=0\) and \(M=1\) (Lemma 2 forces
+\(m\le0\le1\le M\), and \(M-m=1\) leaves no slack), so
+\(0\le u_i\le1\) for all \(i\). On \([0,1]\) we have \(q\ge0\), and
+\(\sum q(u_i)=0\) by (3), so \(q(u_i)=0\) for every \(i\), i.e.
+\[
+u_i\in\{0,1\}\quad\text{for all }i .
+\]
+Then \(\sum u_i\) is a non-negative integer. But (2) gives
+\[
+\sumi u_i=np=n\cdot\frac{5+\sqrt5}{10}\notin\ZZ,
+\]
+since \(\sqrt5\) is irrational and \(n\ge1\). Contradiction. Therefore
+\[
+\boxed{\displaystyle \W(u)>1,
+\qquad
+\W(x)=\sqrt5\,\W(u)>\sqrt5 .}
+\tag{4}
+\]
+
+Unwinding the normalisation, the excluded configuration is exactly the
+one described in the overview: all entries in \(\{a,\varphi\}\), which
+would be \(n\)-good but requires \(np\in\ZZ\).
+
+\section*{4. Part (1), sharpness: a three-point patch}
+
+It remains to show that \(\sqrt5\) is approached, so that no larger
+constant works. The idea is to keep most entries at \(0\) and \(1\) and
+absorb the fractional part of \(np\) into three extra entries.
+
+\textbf{Lemma 3.} For every \(R\in(1,2)\) there exist three distinct
+reals \(y_1,y_2,y_3\) with
+\[
+y_1+y_2+y_3=y_1^2+y_2^2+y_3^2=y_1^3+y_2^3+y_3^3=R .
+\tag{5}
+\]
+
+\textit{Proof.} Prescribe the power sums \(s_1=s_2=s_3=R\) and read off
+the elementary symmetric functions from Newton's identities:
+\[
+e_1=R,\qquad
+e_2=\frac{s_1e_1-s_2}{2}=\frac{R^2-R}{2},\qquad
+e_3=\frac{e_2s_1-e_1s_2+s_3}{3}=\frac{R(R-1)(R-2)}{6}.
+\]
+The corresponding monic cubic is
+\[
+F_R(y)=y^3-Ry^2+\frac{R^2-R}{2}\,y-\frac{R(R-1)(R-2)}{6},
+\tag{6}
+\]
+whose discriminant is
+\[
+\Delta(F_R)=\frac{R^2(3-R)^2(2-R)(R-1)}{6} .
+\tag{7}
+\]
+For \(1<R<2\) all four factors are positive, so \(\Delta>0\) and \(F_R\)
+has three distinct real roots; by construction they satisfy (5).
+\(\square\)
+
+(Identity (7) is the ordinary cubic discriminant
+\(18e_1e_2e_3-4e_1^3e_3+e_1^2e_2^2-4e_2^3-27e_3^2\) after simplification;
+it was verified symbolically and numerically.)
+
+\textbf{The construction.} Since \(p\) is irrational, \(\{np\}_{n\ge1}\)
+is equidistributed \(\bmod\,1\); more concretely, if \(p_k/q_k\) are the
+continued-fraction convergents of \(p\), then for those \(k\) with
+\(q_kp-p_k>0\) one has
+\[
+0<\fr(q_kp)=q_kp-p_k<\frac1{q_k},
+\]
+and these occur for infinitely many \(k\). So choose \(n_j\to\infty\)
+with
+\[
+r_j:=\fr(n_jp)\longrightarrow0^+ ,
+\]
+and set
+\[
+K_j=\lfloor n_jp\rfloor-1,\qquad R_j=1+r_j\in(1,2),
+\qquad\text{so that}\qquad K_j+R_j=n_jp .
+\tag{8}
+\]
+For large \(j\) both \(K_j\ge0\) and \(n_j-K_j-3\ge0\) (as
+\(K_j\approx0.7236\,n_j\)). Take the array
+\[
+u^{(j)}=\bigl(\underbrace{1,\dots,1}_{K_j},\
+\underbrace{0,\dots,0}_{n_j-K_j-3},\ y_1,y_2,y_3\bigr),
+\qquad y_i \text{ the roots of }F_{R_j}.
+\]
+Then for \(k=1,2,3\),
+\[
+\sum_i \bigl(u^{(j)}_i\bigr)^k=K_j\cdot1+0+R_j=n_jp,
+\]
+so by Lemma 1 the corresponding \(x^{(j)}\) is \(n_j\)-good.
+
+As \(R_j\to1^+\), the cubic (6) tends to \(y^3-y^2=y^2(y-1)\), so the root
+multiset converges: \(\{y_1,y_2,y_3\}\to\{0,0,1\}\). Hence
+\(\W(u^{(j)})\to1\) and
+\[
+\W(x^{(j)})=\sqrt5\,\W(u^{(j)})\longrightarrow\sqrt5 .
+\]
+Combined with (4),
+\[
+\boxed{\displaystyle
+\inf\W(x)=\sqrt5,
+\qquad
+C=\sqrt5 . }
+\]
+
+This settles part (1). The patched array is not the narrowest \(n\)-good
+array, though: it spends three entries on the cubic, and Section 10
+exhibits a minimiser using only one interior value, whose excess over
+\(\sqrt5\) is smaller by a factor of order \(n\).
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{0.98\textwidth}{@{}rXXXX@{}}
+\toprule
+\(n\) & \(\fr(np)\) & \(\W(u)\) & \(\eta=\W(u)-1\) & \(\W(x)\) \\
+\midrule
+\(14\)      & \(1.30\cdot10^{-1}\) & \(1.1448171\) & \(1.45\cdot10^{-1}\) & \(2.5598889\) \\
+\(123\)     & \(3.64\cdot10^{-3}\) & \(1.0246280\) & \(2.46\cdot10^{-2}\) & \(2.2911378\) \\
+\(1165\)    & \(1.92\cdot10^{-3}\) & \(1.0178901\) & \(1.79\cdot10^{-2}\) & \(2.2760715\) \\
+\(15127\)   & \(2.96\cdot10^{-5}\) & \(1.0022198\) & \(2.22\cdot10^{-3}\) & \(2.2410315\) \\
+\(103682\)  & \(4.31\cdot10^{-6}\) & \(1.0008479\) & \(8.48\cdot10^{-4}\) & \(2.2379639\) \\
+\midrule
+\(\infty\) & \(0\) & \(1\) & \(0\) & \(\sqrt5=2.2360680\) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+The three power sums of each row were verified to \(25\) decimal places.
+
+\section*{5. Part (2), setup}
+
+Write
+\[
+\W(u)=M-m=1+\eta,
+\qquad \eta>0 \text{ by } (4).
+\]
+If \(\eta\ge1\) then \(\W(x)\ge2\sqrt5>\sqrt5+\lambda n^{-3/2}\) for any
+\(\lambda\le1\), and there is nothing to prove; so assume
+\(0<\eta<1\) from now on.
+
+By Lemma 2, \(m\le0\) and \(M\ge1\); together with \(M-m=1+\eta\) this
+gives \(m\ge M-1-\eta\ge-\eta\) and \(M\le m+1+\eta\le1+\eta\), so
+\[
+\boxed{\displaystyle -\eta\le u_i\le1+\eta\quad\text{for all }i.}
+\tag{9}
+\]
+Every entry is trapped in a window of width \(1+2\eta\) around
+\([0,1]\). Write \(\normZ{t}=\min_{K\in\ZZ}|t-K|\) and
+\(d_i=\dist(u_i,\{0,1\})\).
+
+Sections 6 to 8 bound \(\sum d_i\) by \(n\eta\), upgrade that to a bound
+on \(\sum d_i^2\), and convert it into an upper bound for \(\normZ{np}\).
+Section 8 contrasts this with a lower bound coming from the irrationality
+of \(\sqrt5\).
+
+\section*{6. The entries are close to \(\{0,1\}\) in \(\ell^1\)}
+
+On \([0,1]\), \(q(t)=t(1-t)=\min(t,1-t)\cdot\max(t,1-t)\ge\frac12 d(t)\),
+where \(d(t)=\dist(t,\{0,1\})\); that is,
+\[
+d(t)\le2q(t),\qquad 0\le t\le1 .
+\tag{10}
+\]
+On the two flanks \(t\in[-\eta,0]\cup[1,1+\eta]\),
+\[
+q(t)\ge-\eta(1+\eta)\ge-2\eta,
+\qquad
+d(t)\le\eta .
+\tag{11}
+\]
+By (3) and (11), splitting according to whether \(u_i\in[0,1]\),
+\[
+\sum_{u_i\in[0,1]}q(u_i)
+=-\sum_{u_i\notin[0,1]}q(u_i)
+\le 2n\eta ,
+\]
+and therefore, by (10) and (11) again,
+\[
+\sumi d_i
+=\sum_{u_i\in[0,1]}d_i+\sum_{u_i\notin[0,1]}d_i
+\le 2\sum_{u_i\in[0,1]}q(u_i)+n\eta
+\le5n\eta .
+\tag{12}
+\]
+Since the \(d_i\) are non-negative,
+\((\sum d_i)^2=\sum d_i^2+\text{(cross terms)}\ge\sum d_i^2\), so
+\[
+\sumi d_i^2\le\Bigl(\sumi d_i\Bigr)^2\le25\,n^2\eta^2 .
+\tag{13}
+\]
+
+\section*{7. A doubly tangent cubic converts \(\ell^2\) into an integer}
+
+The bound (13) is quadratic in the distances, so it must be paired with a
+quantity that is itself quadratically small near \(\{0,1\}\). Take
+\[
+B(t)=3t^2-2t^3 .
+\]
+It satisfies \(B(0)=0\), \(B(1)=1\), and \(B'(t)=6t(1-t)\) vanishes at
+both endpoints; equivalently
+\[
+B(t)=t^2(3-2t),
+\qquad
+1-B(t)=(1-t)^2(1+2t),
+\]
+which exhibits the double contact directly. Consequently, for
+\(-1\le t\le2\),
+\[
+\dist\bigl(B(t),\{0,1\}\bigr)\le5\,\dist(t,\{0,1\})^2 ,
+\tag{14}
+\]
+since \(|B(t)|\le5t^2\) for \(t\le\frac12\) and
+\(|1-B(t)|\le5(1-t)^2\) for \(t\ge\frac12\) on that range.
+
+The point of choosing \(B\) among all doubly tangent cubics is that its
+sum is computable from (2):
+\[
+\sumi B(u_i)=3\sumi u_i^2-2\sumi u_i^3=3np-2np=np .
+\tag{15}
+\]
+
+Now let \(b_i\in\{0,1\}\) be a nearest Boolean value to \(B(u_i)\), and
+put \(K=\sum_i b_i\in\ZZ\). By (9) we have \(u_i\in[-1,2]\), so (14)
+applies, and with (15), (13),
+\[
+\normZ{np}\le\Bigl|np-K\Bigr|
+=\Bigl|\sumi B(u_i)-\sumi b_i\Bigr|
+\le\sumi\dist\bigl(B(u_i),\{0,1\}\bigr)
+\le5\sumi d_i^2
+\le125\,n^2\eta^2 .
+\tag{16}
+\]
+
+\section*{8. \(np\) cannot be too close to an integer}
+
+\textbf{Lemma 4.} For every integer \(n\ge4\),
+\[
+\normZ{np}\ge\frac{2}{5\,n},
+\qquad p=\frac{5+\sqrt5}{10}.
+\tag{17}
+\]
+
+\textit{Proof.} Let \(K\in\ZZ\) and put \(m=2K-n\in\ZZ\), so that
+\(m\equiv n\pmod 2\) and
+\[
+10\,|np-K|=|5n+n\sqrt5-10K|=|n\sqrt5-5m| .
+\]
+If \(|n\sqrt5-5m|\ge1\) then \(|np-K|\ge\frac1{10}\ge\frac2{5n}\) for
+\(n\ge4\). Otherwise \(|n\sqrt5-5m|<1\), which forces \(5m>n\sqrt5-1>0\)
+and
+\[
+n\sqrt5+5m<2\sqrt5\,n+1\le5n\qquad(n\ge2).
+\]
+Now use the parity of \(m\). If \(n\) and \(m\) are both even then
+\(4\mid n^2\) and \(4\mid m^2\); if both are odd then \(n^2\equiv m^2\equiv1
+\pmod 8\), so \(n^2-5m^2\equiv-4\equiv0\pmod4\). In either case
+\(4\mid n^2-5m^2\), and \(n^2-5m^2\ne0\) because \(\sqrt5\) is
+irrational. Hence \(|n^2-5m^2|\ge4\) and
+\[
+|n\sqrt5-5m|=\frac{5\,|n^2-5m^2|}{n\sqrt5+5m}\ge\frac{5\cdot4}{5n}=\frac4n ,
+\]
+so \(|np-K|\ge\frac{2}{5n}\). Taking the minimum over \(K\) gives (17).
+\(\square\)
+
+The divisibility \(4\mid n^2-5m^2\) is what upgrades the naive
+\(|n^2-5m^2|\ge1\) to \(\ge4\), and it costs nothing: it is only the
+observation that \(m\) and \(n\) have the same parity by construction.
+
+Bound (17) is close to best possible. Numerically
+\(\min_{4\le n\le3\cdot10^5}n\normZ{np}=0.4222912\), attained at
+\(n=4\), against the constant \(\frac25=0.4\) of (17); Section 12 shows
+that the true asymptotic constant is \(\frac1{\sqrt5}=0.4472136\).
+Note that \(\normZ{np}\asymp n^{-1}\) is \emph{false} as a statement about
+all \(n\): for most \(n\) the quantity \(\normZ{np}\) is of order one, and
+the content of (17) is the lower bound alone.
+
+\section*{9. Part (2), conclusion}
+
+Combining (16) and (17), for \(0<\eta<1\) and \(n\ge4\),
+\[
+\frac{2}{5n}\le\normZ{np}\le125\,n^2\eta^2
+\qquad\Longrightarrow\qquad
+\eta^2\ge\frac{2}{625\,n^3},
+\]
+that is,
+\[
+\boxed{\displaystyle \eta\ge\frac{\sqrt2}{25\,n^{3/2}}
+=\frac{0.0565685\ldots}{n^{3/2}} .}
+\tag{18}
+\]
+(The case \(\eta\ge1\) was settled in Section 5, where the bound is
+trivial.) Hence
+\[
+\W(x)=\sqrt5\,\W(u)=\sqrt5(1+\eta)
+\ge\sqrt5+\frac{\sqrt{10}}{25\,n^{3/2}}
+=\sqrt5+\frac{0.1264911\ldots}{n^{3/2}},
+\]
+and therefore, with the explicit choice \(\lambda=\frac18=0.125\),
+\[
+\boxed{\displaystyle
+\W(x)>\sqrt5+\frac{\lambda}{n^{3/2}}
+\qquad\text{for every }n\ge4\text{ and every }n\text{-good array}. }
+\]
+
+The chain (12)--(18) is quantitative at every step, so \(\lambda\) comes
+out explicitly rather than from a compactness or contradiction
+argument.
+
+
+
+\section*{10. A candidate minimiser}
+
+Sections 10--13 are not part of the proof. They describe the narrowest
+\(n\)-good array that numerical search finds and work out its
+asymptotics. The formulas are supported by computation and by a
+consistent asymptotic expansion, but global optimality is not proved;
+Section 12 states which steps are missing.
+
+Write
+\[
+M_n=\inf\bigl\{\W(x):x\ \text{is }n\text{-good}\bigr\},
+\qquad
+W_n=\frac{M_n}{\sqrt5}=\inf\W(u),
+\]
+so that part (2) asserts \(M_n>\sqrt5+\lambda n^{-3/2}\).
+
+The configuration found by numerical minimisation takes three distinct
+values, with the two extreme ones carrying almost all the mass.
+
+\textbf{The ansatz.} Fix \(n\) and put
+\[
+k=\lfloor np\rfloor,\qquad \ell=n-k-1,\qquad r=\{np\},
+\]
+and consider arrays of the form
+\[
+u=\bigl(\underbrace{v_-,\dots,v_-}_{\ell},\ w,\ \underbrace{v_+,\dots,v_+}_{k}\bigr),
+\qquad v_-<w<v_+ .
+\tag{19}
+\]
+The three moment equations (2) become three equations in \(v_-,w,v_+\),
+\[
+\ell v_-^{\,j}+w^{\,j}+k\,v_+^{\,j}=np,\qquad j=1,2,3,
+\tag{20}
+\]
+so no free parameter remains. By Lemma 2 the extreme values satisfy
+\(v_-\le0\) and \(v_+\ge1\), and by Section 3 at least one inequality is
+strict; numerically both are.
+
+\textbf{Reduction to one scalar equation.} System (20) is easier to
+handle after eliminating two unknowns. For fixed \(w\), the first two
+equations determine \(v_\pm\) uniquely: with \(T=n-1\) and \(s=np\),
+\[
+\mu(w)=\frac{s-w}{T},
+\qquad
+D(w)=s-w^2-\frac{(s-w)^2}{T},
+\qquad
+\delta(w)=\sqrt{\frac{T\,D(w)}{k\ell}},
+\]
+\[
+v_-(w)=\mu(w)-\frac kT\delta(w),
+\qquad
+v_+(w)=\mu(w)+\frac \ell T\delta(w),
+\tag{21}
+\]
+and the third equation becomes a single scalar condition
+\[
+G_n(w)=\ell\,v_-(w)^3+w^3+k\,v_+(w)^3-s=0 .
+\tag{22}
+\]
+For every \(n\) checked, \(4\le n\le10^4\), one finds \(G_n(0)>0\),
+\(G_n(1)<0\), and exactly one root in between, giving an ordered solution
+\(v_-<0<w<1<v_+\). Proving these two sign conditions and the uniqueness
+of the root would establish existence and uniqueness of (19); that is not
+done here.
+
+\textbf{Asymptotics.} Write \(v_-=-A/n\) and \(v_+=1+C/n\) and expand
+(20) in \(1/n\), using \(\ell=(1-p)n+O(1)\) and \(k=pn+O(1)\). To leading
+order,
+\[
+p\,C=w^2(1-w)+O(n^{-1}),
+\qquad
+(1-p)\,A=w(1-w)^2+O(n^{-1}),
+\tag{23}
+\]
+and substituting back leaves a single condition on \(w\):
+\[
+\boxed{\displaystyle 3w^2-2w^3=\{np\}+O(n^{-1}).}
+\tag{24}
+\]
+The error term in (24) is not negligible at small \(n\). At \(n=4\) the
+actual root is \(w_4=0.8155117\ldots\), whereas the solution of
+\(3w^2-2w^3=\{4p\}\) is \(0.7985\ldots\); the two agree only to first
+order.
+
+The cubic on the left of (24) is exactly the doubly tangent \(B\) of
+Section 7, and the coincidence has a reason. Identity (15) says \(\sum_iB(u_i)=np\) for \emph{every} good array; evaluated on (19),
+\(B(v_-)=O(n^{-2})\) and \(1-B(v_+)=O(n^{-2})\), so
+\[
+\ell B(v_-)+B(w)+kB(v_+)=B(w)+k+O(n^{-1})=np
+\quad\Longrightarrow\quad
+B(w)=\{np\}+O(n^{-1}).
+\]
+The function used to prove the lower bound is the same one that locates
+the middle atom. Section 12 shows that this is why the bound of Section 9
+is sharp in order.
+
+\textbf{Inverting \(B\).} On \([0,1]\) the map \(B\) is an increasing
+bijection onto \([0,1]\), and its inverse has a closed form:
+\[
+\boxed{\displaystyle
+\sigma(r)=\frac12-\sin\!\left(\frac13\arcsin(1-2r)\right),
+\qquad
+B(\sigma(r))=r,\quad r\in[0,1].}
+\tag{25}
+\]
+(Endpoints: \(r=0\) gives \(\frac12-\sin\frac\pi6=0\), \(r=1\) gives
+\(\frac12+\sin\frac\pi6=1\), and \(r=\frac12\) gives \(\frac12\).)
+Formula (25) is the trigonometric solution of \(2\sigma^3-3\sigma^2+r=0\),
+which has three real roots for \(r\in(0,1)\); (25) selects the one in
+\([0,1]\).
+
+\section*{11. The parametric law}
+
+Substituting (23) and (24) into \(\W(u)=v_+-v_-=1+\frac{A+C}{n}\) gives
+the following description, again asymptotic and again unproved.
+
+\textbf{Conjecture.} With \(\sigma=\sigma(\{np\})\) from (25) and
+\[
+\boxed{\displaystyle
+\Phi(r)=\sigma(1-\sigma)\left(\frac{\sigma}{p}+\frac{1-\sigma}{1-p}\right),
+\qquad 1-p=\frac{5-\sqrt5}{10},}
+\tag{26}
+\]
+the minimal width satisfies
+\[
+\boxed{\displaystyle
+W_n=1+\frac{\Phi(\{np\})}{n}+O\!\left(\frac1{n^{2}}\right),
+\qquad
+M_n=\sqrt5+\frac{\sqrt5\,\Phi(\{np\})}{n}+O\!\left(\frac1{n^{2}}\right).}
+\tag{27}
+\]
+
+Two caveats on (27). It presumes that (19) is optimal, which is not
+proved. And the remainder \(O(n^{-2})\) is claimed uniformly, whereas the
+expansion leading to it is not uniform: \(B'(\sigma)\to0\) as
+\(\{np\}\to0\) or \(1\), so the implicit-function step degenerates
+precisely on the subsequences that matter in Section 12. Numerically the
+remainder does behave like \(n^{-2}\) there, but the derivation above
+does not establish it.
+
+Granting (27), the answer is not a single power of \(n\): it is a fixed
+profile \(\Phi\) sampled at the equidistributed points \(\{np\}\) and
+scaled by \(\frac1n\). For most \(n\) the excess is of order \(\frac1n\);
+smaller powers appear only when \(\{np\}\) approaches an endpoint.
+
+Some values of \(\Phi\). Since
+\[
+p(1-p)=\frac{5+\sqrt5}{10}\cdot\frac{5-\sqrt5}{10}=\frac{20}{100}=\frac15,
+\]
+the midpoint value is exact:
+\[
+\Phi\!\left(\tfrac12\right)
+=\frac14\cdot\frac12\left(\frac1p+\frac1{1-p}\right)
+=\frac18\cdot\frac{1}{p(1-p)}
+=\frac58 .
+\]
+The maximum is \(\Phi\approx0.65367\) near \(r\approx0.354\). Combined
+with (27) this gives
+\[
+M_n-\sqrt5\le\frac{0.654\sqrt5}{n}+O(n^{-2}),
+\]
+not a clean bound for every \(n\): the remainder in (27) may be positive,
+so the honest statement is that for each \(\varepsilon>0\) the excess is
+at most \((0.654+\varepsilon)\sqrt5/n\) once \(n\) is large.
+
+\textbf{The two edges.} Near \(r=0\) we have \(B(\sigma)\approx3\sigma^2\),
+so \(\sigma\approx\sqrt{r/3}\) and only the second term of (26) survives:
+\[
+\Phi(r)=\frac1{1-p}\sqrt{\frac r3}+O(r),
+\qquad r\to0^{+}.
+\tag{28}
+\]
+Near \(r=1\), writing \(\tau=1-r\), the same expansion at the other end
+gives \(1-\sigma\approx\sqrt{\tau/3}\) and
+\[
+\Phi(1-\tau)=\frac1p\sqrt{\frac\tau3}+O(\tau),
+\qquad \tau\to0^{+}.
+\tag{29}
+\]
+The two edges are not symmetric. Since \(p>1-p\), the coefficient
+\(\frac1p\) in (29) is smaller than \(\frac1{1-p}\) in (28), so the
+\emph{right} edge, \(\{np\}\) just below \(1\), produces the smaller
+width. That is the dangerous side.
+
+Combining (27) and (29), when \(np\) lies just below an integer,
+\[
+W_n-1
+\;\sim\;
+\frac{1}{p\sqrt3}\cdot\frac{\sqrt{\normZ{np}}}{n},
+\tag{30}
+\]
+which is the square-root law behind the exponent \(\frac32\): a defect of
+size \(\normZ{np}\) in the arithmetic costs only \(\sqrt{\normZ{np}}\) in
+the geometry, because \(B\) is tangent to its endpoint values.
+
+\section*{12. What is and is not established about the exponent}
+
+Formula (30) turns the question into one about how well \(np\) can be
+approximated by integers, and that part \emph{can} be settled exactly.
+
+\textbf{An exact Diophantine identity.} Let \(\varphi=\frac{1+\sqrt5}2\),
+\(\psi=\frac{1-\sqrt5}2=-\varphi^{-1}\), and let \(L_m=\varphi^m+\psi^m\),
+\(F_m=\frac{\varphi^m-\psi^m}{\sqrt5}\) be the Lucas and Fibonacci
+numbers. Since \(p=\frac12+\frac1{2\sqrt5}=\frac{\varphi}{\sqrt5}\),
+\[
+L_mp-F_{m+1}
+=\frac{(\varphi^m+\psi^m)\varphi-(\varphi^{m+1}-\psi^{m+1})}{\sqrt5}
+=\frac{\psi^m(\varphi+\psi)}{\sqrt5}
+=\frac{(-1)^m}{\sqrt5\,\varphi^{m}},
+\tag{31}
+\]
+using \(\varphi+\psi=1\). For \(m\ge1\) the right-hand side has modulus
+below \(\frac12\), so \(F_{m+1}\) is the nearest integer and
+\[
+L_m\normZ{L_mp}=\frac{L_m}{\sqrt5\,\varphi^m}
+=\frac{1+(-1)^m\varphi^{-2m}}{\sqrt5}.
+\tag{32}
+\]
+For odd \(m\) this is \emph{below} \(\frac1{\sqrt5}\) and increases to it;
+these are the \(n=L_m\) with \(\{np\}\to1^-\), the dangerous edge of
+Section 11. The odd-index Lucas numbers are
+\(4,11,29,76,199,521,1364,3571,9349,\dots\), satisfying
+\(n_{j+1}=3n_j-n_{j-1}\). Together with Hurwitz's theorem, (32) gives
+\[
+\liminf_{n\to\infty}n\normZ{np}=\frac1{\sqrt5},
+\tag{33}
+\]
+and it shows that the constant \(\frac25\) of Lemma 4 cannot be raised
+above \(\frac1{\sqrt5}\).
+
+\textbf{The conjectural constant.} Substituting
+\(\normZ{np}\sim\frac1{\sqrt5\,n}\) into (30) and granting (27),
+\[
+\liminf_{n\to\infty}n^{3/2}\bigl(W_n-1\bigr)
+\;\overset{?}{=}\;\frac1{p\sqrt{3\sqrt5}}=0.5335734771\ldots,
+\tag{34}
+\]
+\[
+\liminf_{n\to\infty}n^{3/2}\bigl(M_n-\sqrt5\bigr)
+\;\overset{?}{=}\;\frac{\sqrt5}{p\sqrt{3\sqrt5}}=1.1931065657\ldots
+\]
+The question marks record that (34) inherits both unproved ingredients
+of Section 11.
+
+\textbf{Three statements that must be kept apart.} Let
+\[
+\Lambda_{\mathrm{unif}}=\inf_{n\ge4}n^{3/2}\bigl(M_n-\sqrt5\bigr)
+\]
+be the supremum of admissible constants in part (2). Then always
+\[
+\Lambda_{\mathrm{unif}}\le\liminf_{n\to\infty}n^{3/2}\bigl(M_n-\sqrt5\bigr),
+\]
+and equality is a separate claim: some finite \(n\), or some other family
+of configurations, could give a smaller value. So even a proof of (34)
+would not by itself identify the best \(\lambda\); it would only exhibit
+an asymptotic obstruction. What Section 9 does prove is
+\(\Lambda_{\mathrm{unif}}\ge\frac{\sqrt{10}}{25}=0.1264911\ldots\), a
+factor \(9.43\) below the conjectured value.
+
+\textbf{What would suffice for optimality of the exponent.} To show that
+\(\frac32\) cannot be lowered, global optimality of (19) is \emph{not}
+needed. It is enough to
+\begin{enumerate}
+\item[(a)] prove that (22) has a root \(w\in(0,1)\) with
+\(v_-(w)<0<w<1<v_+(w)\), at least for \(n=L_m\) with \(m\) odd;
+\item[(b)] prove for that explicit admissible array the bound
+\(\W(x)-\sqrt5=O(n^{-3/2})\), using (31) for the size of \(\{np\}\).
+\end{enumerate}
+Then \(M_n-\sqrt5=O(n^{-3/2})\) along a subsequence, so no universal
+bound \(\W(x)\ge\sqrt5+\lambda n^{-\alpha}\) with \(\alpha<\frac32\) can
+hold, and part (2) asks for the correct power. Step (a) is a statement
+about the sign of one explicit scalar function, which is a far smaller
+task than a global minimisation theorem. Identifying \(\Lambda_{\rm
+unif}\) or proving (27) would additionally require a genuine
+moment-space argument: a dual polynomial certificate, or a complete
+analysis of the optimality conditions ruling out configurations with two
+interior atoms.
+
+\textbf{Why the proof of Sections 6--9 is sharp in order.} Evaluate the
+chain on the array (19) in the dangerous regime, where \(\sigma\to1\) and
+\(\eta=W_n-1\sim(1-\sigma)/(pn)\).
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.45}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.17\textwidth}XXX@{}}
+\toprule
+Quantity & proved bound & value on (19) & loss \\
+\midrule
+\(\sum_i d_i\)
+& \(\le5n\eta\) \ (12)
+& \(\sim2(1-\sigma)=2pn\eta\)
+& \(3.5\times\) \\
+\(\sum_i d_i^2\)
+& \(\le(\sum_i d_i)^2\) \ (13)
+& \(\sim(1-\sigma)^2=p^2n^2\eta^2\)
+& \(4\times\) \\
+\(\normZ{np}\)
+& \(\le125n^2\eta^2\) \ (16)
+& \(\sim3(1-\sigma)^2=3p^2n^2\eta^2\)
+& \(79.6\times\) \\
+\(\normZ{np}\)
+& \(\ge\frac2{5n}\) \ (17)
+& \(\sim\frac1{\sqrt5\,n}\) along odd Lucas \(n\)
+& \(1.12\times\) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Every entry is tight in order of magnitude; only constants are lost, and
+after Lemma 4 the arithmetic input is nearly sharp. The exact relation
+behind the third row is
+\[
+1-B(\sigma)=(1-\sigma)^2(1+2\sigma),
+\]
+which is asymptotically \(3(1-\sigma)^2\) as \(\sigma\to1\); this is (24)
+again, and the double tangency of \(B\) is the reason the exponent is
+\(\frac32\) rather than \(2\). Feeding the sharp constants through the
+same argument returns
+\[
+\eta\gtrsim\frac{1}{p\sqrt{3\sqrt5}}\,n^{-3/2},
+\]
+which is (34). The residual gap between the proved
+\(\frac{\sqrt{10}}{25}\) and the conjectured
+\(\frac{\sqrt5}{p\sqrt{3\sqrt5}}\) is a factor \(9.43\), splitting as
+\(\sqrt{79.6}=8.92\) from the constants in (12), (13), (16) and
+\(\sqrt{1.12}=1.06\) from Lemma 4.
+
+\section*{13. Numerics}
+
+Solving (20) to \(30\) digits gives the following. The dangerous
+subsequence, \(n=L_m\) with \(m\) odd:
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}rXXXXX@{}}
+\toprule
+\(n\) & \(\{np\}\) & \(w_n\) & \(\W(u)-1\) & \(n^{3/2}(\W(u)-1)\) & \(n^{3/2}(\W(x)-\sqrt5)\) \\
+\midrule
+\(4\)    & \(0.894427\) & \(0.815512\) & \(8.7707\cdot10^{-2}\) & \(0.701658\) & \(1.568954\) \\
+\(11\)   & \(0.959675\) & \(0.884207\) & \(1.6911\cdot10^{-2}\) & \(0.616974\) & \(1.379596\) \\
+\(29\)   & \(0.984597\) & \(0.927913\) & \(3.7103\cdot10^{-3}\) & \(0.579440\) & \(1.295668\) \\
+\(76\)   & \(0.994117\) & \(0.955392\) & \(8.4485\cdot10^{-4}\) & \(0.559760\) & \(1.251662\) \\
+\(199\)  & \(0.997753\) & \(0.972463\) & \(1.9553\cdot10^{-4}\) & \(0.548906\) & \(1.227392\) \\
+\(521\)  & \(0.999142\) & \(0.983009\) & \(4.5637\cdot10^{-5}\) & \(0.542716\) & \(1.213550\) \\
+\(1364\) & \(0.999672\) & \(0.989514\) & \(1.0701\cdot10^{-5}\) & \(0.539094\) & \(1.205451\) \\
+\(3571\) & \(0.999875\) & \(0.993526\) & \(2.5162\cdot10^{-6}\) & \(0.536935\) & \(1.200624\) \\
+\(9349\) & \(0.999952\) & \(0.996002\) & \(5.9254\cdot10^{-7}\) & \(0.535632\) & \(1.197709\) \\
+\midrule
+conjectured limit & \(1\) & \(1\) & -- & \(0.533573\) & \(1.193107\) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+The minimum of \(n^{3/2}(\W(u)-1)\) over \(4\le n\le10^4\) is
+\(0.5356319\), at \(n=9349\); the column decreases monotonically towards
+the value conjectured in (34). Every entry exceeds the proved bound
+\(\frac{\sqrt2}{25}=0.0565685\) of (18), by a factor between \(12\) and
+\(9.5\).
+
+For ordinary \(n\), law (27) is already accurate at moderate size:
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{0.86\textwidth}{@{}rXXX@{}}
+\toprule
+\(n\) & \(\{np\}\) & \(n\bigl(\W(u)-1\bigr)\) & \(\Phi(\{np\})\) \\
+\midrule
+\(37\)   & \(0.773452\) & \(0.4501191\) & \(0.4417257\) \\
+\(100\)  & \(0.360680\) & \(0.6622113\) & \(0.6536000\) \\
+\(250\)  & \(0.901699\) & \(0.2845883\) & \(0.2839127\) \\
+\(777\)  & \(0.242482\) & \(0.6331557\) & \(0.6319304\) \\
+\(2000\) & \(0.213596\) & \(0.6180249\) & \(0.6175447\) \\
+\(5000\) & \(0.033989\) & \(0.3316817\) & \(0.3315599\) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\textbf{Status of the numerical evidence.} For \(n=4,8,12,20,30,50\) a
+general constrained minimisation of \(\W\) over all \(n\)-good arrays
+(SLSQP with auxiliary bounds \(m\le u_i\le M\), many random starts)
+returns the value from (20) to seven or eight digits, and no narrower
+configuration was found for \(4\le n\le30\). This is local optimisation
+from random starts, so it is evidence for the conjecture and not a
+certificate: it rules out nothing globally. Separately, (19) is narrower
+than the Section 4 patch by a factor of order \(n\), for instance
+\(7.48\cdot10^{-7}\) against \(2.22\cdot10^{-3}\) at \(n=15127\), which
+shows only that the patch is not extremal.
+
+\section*{References}
+
+\begin{enumerate}[label={[\arabic*]}]
+\item A.~Hurwitz, \emph{\"Uber die angen\"aherte Darstellung der
+Irrationalzahlen durch rationale Br\"uche}, Math.\ Ann.\ \textbf{39}
+(1891), 279--284. (Used for (33); the special case needed here also
+follows from the exact identity (31).)
+\item A.~Ya.~Khinchin, \emph{Continued Fractions}, University of Chicago
+Press, 1964. (Convergents, equidistribution of \(\{np\}\), Section 4.)
+\item M.~G.~Krein and A.~A.~Nudelman, \emph{The Markov Moment Problem and
+Extremal Problems}, Amer.\ Math.\ Soc., 1977. (The moment-space
+framework that a proof of (27) would need.)
+\end{enumerate}
+
+\end{document}

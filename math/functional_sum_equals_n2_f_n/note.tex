@@ -1,0 +1,240 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper,margin=1.25cm]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\abovedisplayskip}{5pt plus 1pt minus 1pt}
+\setlength{\belowdisplayskip}{5pt plus 1pt minus 1pt}
+\setlength{\abovedisplayshortskip}{3pt plus 1pt minus 1pt}
+\setlength{\belowdisplayshortskip}{3pt plus 1pt minus 1pt}
+
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries A sequence pinned by its own partial sums}\\[0.35em]
+{\large \(S_n=n^2f(n)\) forces \(f(n)=\dfrac{2f(1)}{n(n+1)}\)}
+\end{center}
+
+\textbf{Problem.} A function \(f\) on the positive integers satisfies
+\[
+\sum_{k=1}^{n}f(k)=n^2f(n)\qquad\text{for every }n\ge1,
+\qquad f(1)=2027 .
+\]
+Find \(f(2026)\).
+
+\[
+\boxed{\displaystyle
+f(n)=\frac{2f(1)}{n(n+1)},
+\qquad
+f(2026)=\frac{2\cdot2027}{2026\cdot2027}=\frac1{1013}.}
+\]
+
+\textbf{Overview.}
+A condition relating a sequence to its own partial sums is really a
+first-order recurrence in disguise. Subtracting the relation at \(n-1\)
+from the relation at \(n\) eliminates the sum entirely and leaves
+\[
+(n+1)f(n)=(n-1)f(n-1),
+\]
+whose solution is a telescoping product collapsing to
+\(\frac{2}{n(n+1)}\) times \(f(1)\). The value \(2027\) then cancels
+against the \(2027\) hidden inside \(2026\cdot2027\), which is why the
+answer is a clean \(\frac1{1013}\).
+
+\section*{1. From the sum condition to a recurrence}
+
+Write
+\[
+S_n=\sum_{k=1}^{n}f(k),
+\qquad\text{so the hypothesis is}\qquad
+S_n=n^2f(n)\quad (n\ge1).
+\tag{1}
+\]
+For \(n=1\) this reads \(f(1)=1\cdot f(1)\), which is automatic: the
+hypothesis places no constraint on \(f(1)\), and that is why the problem
+must supply it.
+
+For \(n\ge2\), subtract (1) at \(n-1\) from (1) at \(n\), using
+\(S_n-S_{n-1}=f(n)\):
+\[
+n^2f(n)-(n-1)^2f(n-1)=f(n).
+\]
+Collecting the \(f(n)\) terms,
+\[
+(n^2-1)f(n)=(n-1)^2f(n-1),
+\]
+and factoring \(n^2-1=(n-1)(n+1)\), then cancelling the common factor
+\(n-1\ne0\),
+\[
+\boxed{\displaystyle (n+1)f(n)=(n-1)f(n-1),\qquad n\ge2 .}
+\tag{2}
+\]
+Equivalently
+\[
+\frac{f(n)}{f(n-1)}=\frac{n-1}{n+1},\qquad n\ge2 .
+\tag{3}
+\]
+At \(n=2\) relation (2) reads \(3f(2)=1\cdot f(1)\), so
+\(f(2)=\frac{f(1)}{3}\); the recurrence is well posed from the start,
+and the sum has disappeared completely.
+
+\section*{2. Solving the recurrence}
+
+Iterating (3) from \(n\) down to \(2\),
+\[
+f(n)=f(1)\prod_{k=2}^{n}\frac{k-1}{k+1}
+=f(1)\cdot\frac{1\cdot2\cdot3\cdots(n-1)}{3\cdot4\cdot5\cdots(n+1)} .
+\tag{4}
+\]
+The numerator is \((n-1)!\) and the denominator is
+\(\frac{(n+1)!}{2}\), so the product collapses:
+\[
+\prod_{k=2}^{n}\frac{k-1}{k+1}
+=\frac{(n-1)!}{(n+1)!/2}
+=\frac{2}{n(n+1)} .
+\]
+Hence
+\[
+\boxed{\displaystyle f(n)=\frac{2f(1)}{n(n+1)},\qquad n\ge1,}
+\tag{5}
+\]
+and the formula is also correct at \(n=1\), where it returns
+\(\frac{2f(1)}{2}=f(1)\).
+
+The mechanism is a shifted telescope: the numerator of each factor is the
+denominator of the factor two steps earlier, so all but two terms cancel
+at each end, one pair surviving at the bottom (\(1\cdot2\)) and one
+pair at the top (\(n(n+1)\)).
+
+\section*{3. Verification}
+
+Formula (5) must still be checked against (1), not merely against (2),
+since the passage to the recurrence discards information. With
+\(f(k)=\frac{2f(1)}{k(k+1)}\),
+\[
+S_n=2f(1)\sum_{k=1}^{n}\frac1{k(k+1)}
+=2f(1)\sum_{k=1}^{n}\left(\frac1k-\frac1{k+1}\right)
+=2f(1)\left(1-\frac1{n+1}\right)
+=\frac{2f(1)\,n}{n+1},
+\]
+while
+\[
+n^2f(n)=n^2\cdot\frac{2f(1)}{n(n+1)}=\frac{2f(1)\,n}{n+1}.
+\]
+The two agree for all \(n\ge1\), so (5) is the unique solution. \(\square\)
+
+The partial-fraction telescope \(\frac1{k(k+1)}=\frac1k-\frac1{k+1}\) is
+the same collapse as in Section 2, now on the additive side, a sign
+that \(n^2\) was not an arbitrary weight.
+
+\section*{4. The answer}
+
+With \(f(1)=2027\) and \(n=2026\),
+\[
+f(2026)=\frac{2\cdot2027}{2026\cdot2027}
+=\frac{2}{2026}
+=\frac1{1013}.
+\]
+The constant \(2027\) cancels identically: it appears in the numerator
+through \(f(1)\) and in the denominator as the factor \(n+1=2027\). The
+problem is arranged so that the requested index is exactly one below the
+given initial value, which is the only reason the answer is rational with
+such a small denominator. Since \(2026=2\cdot1013\), the final form is
+\(\frac1{1013}\).
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{0.8\textwidth}{@{}lXXX@{}}
+\toprule
+\(n\) & \(f(n)=\frac{2\cdot2027}{n(n+1)}\) & \(S_n\) & \(n^2f(n)\) \\
+\midrule
+\(1\) & \(2027\)                & \(2027\)                  & \(2027\) \\
+\(2\) & \(2027/3\)              & \(4054/3\)                & \(4054/3\) \\
+\(3\) & \(2027/6\)              & \(3\cdot2027/2\)          & \(3\cdot2027/2\) \\
+\(4\) & \(2027/10\)             & \(8\cdot2027/5\)          & \(8\cdot2027/5\) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section*{5. The general weight}
+
+Nothing is special about \(n^2\) except the arithmetic that follows.
+Suppose instead
+\[
+\sum_{k=1}^{n}f(k)=w(n)f(n),\qquad n\ge1 ,
+\]
+for a given sequence \(w\). Consistency at \(n=1\) forces \(w(1)=1\).
+The same subtraction gives
+\[
+\bigl(w(n)-1\bigr)f(n)=w(n-1)f(n-1),
+\qquad\text{so}\qquad
+f(n)=f(1)\prod_{j=2}^{n}\frac{w(j-1)}{w(j)-1},
+\tag{6}
+\]
+valid whenever \(w(n)\ne1\) for \(n\ge2\).
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.14\textwidth}>{\raggedright\arraybackslash}p{0.26\textwidth}X@{}}
+\toprule
+\(w(n)\) & ratio \(\dfrac{w(n-1)}{w(n)-1}\) & solution \\
+\midrule
+\(n\)
+& \(\dfrac{n-1}{n-1}=1\)
+& \(f(n)=f(1)\): the condition \(S_n=n f(n)\) says every term equals the
+running average, i.e. \(f\) is constant. \\
+\addlinespace
+\(n^2\)
+& \(\dfrac{(n-1)^2}{n^2-1}=\dfrac{n-1}{n+1}\)
+& \(f(n)=\dfrac{2f(1)}{n(n+1)}\), the present problem. \\
+\addlinespace
+\(2n-1\)
+& \(\dfrac{2n-3}{2n-2}\)
+& \(f(n)=f(1)\displaystyle\prod_{j=2}^{n}\frac{2j-3}{2j-2}
+=f(1)\frac{(2n-3)!!}{(2n-2)!!}\sim\dfrac{Cf(1)}{\sqrt n}\). \\
+\addlinespace
+\(n^3\)
+& \(\dfrac{(n-1)^2}{n^2+n+1}\)
+& no elementary closed form; the denominator \(n^2+n+1\) does not factor
+over \(\mathbb Q\), so the product does not telescope. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+The table isolates what makes the stated problem work: for \(w(n)=n^2\)
+the difference \(w(n)-1=n^2-1\) factors, and one of its factors cancels
+the \((n-1)^2\) coming from \(w(n-1)\). A weight is ``nice'' for this
+problem exactly when \(w(n)-1\) shares a factor with \(w(n-1)\), and
+\(n^2-1=(n-1)(n+1)\) is the smallest interesting instance.
+
+\section*{6. A continuous shadow}
+
+The same computation has an integral analogue that explains the exponent.
+If \(F(x)=\int_1^x f\) satisfies \(F(x)=x^2f(x)=x^2F'(x)\), then
+\[
+\frac{F'}{F}=\frac1{x^2},
+\qquad
+\log F(x)=-\frac1x+C,
+\qquad
+F(x)=A\,\e^{-1/x},
+\]
+so \(f(x)=F'(x)=\frac{A}{x^2}\e^{-1/x}\), which decays like \(x^{-2}\).
+The discrete solution \(f(n)=\frac{2f(1)}{n(n+1)}\) has the same
+\(n^{-2}\) decay; the discrete problem simply replaces the exponential
+factor by an exact rational one, because the discrete telescope is exact
+where the continuous one requires an integrating factor.
+
+\end{document}

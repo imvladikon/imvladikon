@@ -1,0 +1,343 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper,margin=1.25cm]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\abovedisplayskip}{5pt plus 1pt minus 1pt}
+\setlength{\belowdisplayskip}{5pt plus 1pt minus 1pt}
+\setlength{\abovedisplayshortskip}{3pt plus 1pt minus 1pt}
+\setlength{\belowdisplayshortskip}{3pt plus 1pt minus 1pt}
+
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\om}{\omega}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries A logarithm over the cyclotomic quadratic}\\[0.35em]
+{\large one parameter, one partial fraction, and a rational function that collapses}
+\end{center}
+
+\[
+\boxed{\displaystyle
+\int_0^\infty\frac{\log(1+x^3)}{1+x+x^2}\dd x
+=\frac{2\pi\log2}{\sqrt3}.}
+\]
+
+\textbf{Overview.}
+Introduce the parameter
+\[
+F(t)=\int_0^\infty\frac{\log(1+t^3x^3)}{1+x+x^2}\dd x,
+\qquad t\ge0,
+\]
+so that the problem is \(F(1)\). Differentiating in \(t\) turns the
+logarithm into a rational function, and that rational integral has a
+simple value: the whole cubic--quadratic interaction cancels
+and leaves
+\[
+\int_0^\infty\frac{\dd x}{(1+t^3x^3)(1+x+x^2)}
+=\frac{2\pi}{3\sqrt3}\cdot\frac1{1+t}.
+\]
+Hence \(F'(t)=\frac{2\pi}{\sqrt3}\cdot\frac1{1+t}\), and integrating back
+from \(F(0)=0\) gives
+\[
+\boxed{\displaystyle
+F(t)=\frac{2\pi}{\sqrt3}\log(1+t),\qquad t\ge0,}
+\]
+of which the stated integral is the case \(t=1\).
+
+The reason the constant \(\frac{2\pi}{3\sqrt3}\) governs everything is
+that \(\frac{\dd x}{1+x+x^2}\) is, up to the factor \(\frac1{\sqrt3}\),
+arclength on a circular arc; Section 5 makes this precise.
+
+\section*{1. The parametrised integral}
+
+For \(t>0\) put
+\[
+F(t)=\int_0^\infty\frac{\log(1+t^3x^3)}{1+x+x^2}\dd x .
+\]
+Convergence is immediate: at \(0\) the integrand vanishes like
+\(t^3x^3\), and at infinity it behaves like \(\frac{3\log x}{x^2}\).
+Also \(F(0)=0\).
+
+Differentiating under the integral sign,
+\[
+F'(t)=\int_0^\infty\frac{3t^2x^3}{(1+t^3x^3)(1+x+x^2)}\dd x .
+\tag{1}
+\]
+The differentiation is legitimate on any interval \(0<t_1\le t\le t_2\):
+the \(t\)-derivative of the integrand is bounded by
+\(\frac{3}{t_1}\cdot\frac1{1+x+x^2}\), because
+\(\frac{t^3x^3}{1+t^3x^3}\le1\), and that bound is integrable.
+
+The identity
+\[
+3t^2x^3=\frac{3}{t}\bigl[(1+t^3x^3)-1\bigr]
+\]
+splits (1) into
+\[
+F'(t)=\frac3t\left[
+\int_0^\infty\frac{\dd x}{1+x+x^2}
+-\int_0^\infty\frac{\dd x}{(1+t^3x^3)(1+x+x^2)}
+\right]
+=\frac3t\bigl[C-K(t)\bigr],
+\tag{2}
+\]
+where
+\[
+C=\int_0^\infty\frac{\dd x}{1+x+x^2},
+\qquad
+K(t)=\int_0^\infty\frac{\dd x}{(1+t^3x^3)(1+x+x^2)} .
+\]
+
+\section*{2. The base constant}
+
+Completing the square,
+\[
+C=\int_0^\infty\frac{\dd x}{\left(x+\frac12\right)^2+\frac34}
+=\frac{2}{\sqrt3}\left[\arctan\frac{2x+1}{\sqrt3}\right]_0^\infty
+=\frac{2}{\sqrt3}\left(\frac\pi2-\frac\pi6\right),
+\]
+so
+\[
+\boxed{\displaystyle C=\int_0^\infty\frac{\dd x}{1+x+x^2}
+=\frac{2\pi}{3\sqrt3}.}
+\tag{3}
+\]
+
+\section*{3. The rational lemma}
+
+\textbf{Lemma.} For every \(t>0\),
+\[
+\boxed{\displaystyle
+K(t)=\int_0^\infty\frac{\dd x}{(1+t^3x^3)(1+x+x^2)}
+=\frac{2\pi}{3\sqrt3}\cdot\frac1{1+t}
+=\frac{C}{1+t}.}
+\tag{4}
+\]
+
+\textit{Proof.} Write \(P(x)=1+t^3x^3\) and \(Q(x)=1+x+x^2\), and seek the
+partial fraction decomposition
+\[
+\frac1{P(x)Q(x)}=\frac{\alpha(x)}{P(x)}+\frac{\beta(x)}{Q(x)},
+\qquad \deg\alpha\le2,\ \deg\beta\le1 .
+\]
+Equivalently \(1=\alpha Q+\beta P\). Evaluate at the roots of \(Q\),
+namely the primitive cube roots of unity \(\om=\e^{2\pi\ii/3}\) and
+\(\overline\om\). Since \(\om^3=\overline\om^{\,3}=1\),
+\[
+P(\om)=1+t^3\om^3=1+t^3=P(\overline\om),
+\]
+so
+\[
+\beta(\om)=\beta(\overline\om)=\frac1{1+t^3}.
+\]
+A polynomial of degree \(\le1\) taking equal values at two distinct
+points is constant, hence
+\[
+\beta(x)\equiv\frac1{1+t^3}.
+\tag{5}
+\]
+This is the only place where the cubic structure is used, and it is
+exactly the statement that \(Q\) divides \(x^3-1\).
+
+For \(\alpha\), subtract:
+\[
+\frac{\alpha(x)}{P}
+=\frac1{PQ}-\frac1{(1+t^3)Q}
+=\frac{(1+t^3)-P(x)}{(1+t^3)PQ}
+=\frac{t^3\bigl(1-x^3\bigr)}{(1+t^3)PQ}.
+\]
+Now \(1-x^3=(1-x)(1+x+x^2)=(1-x)Q\), so the factor \(Q\) cancels and
+\[
+\alpha(x)=\frac{t^3(1-x)}{1+t^3}.
+\tag{6}
+\]
+Thus
+\[
+\frac1{P(x)Q(x)}
+=\frac1{1+t^3}\left[\frac{t^3(1-x)}{1+t^3x^3}+\frac1{1+x+x^2}\right].
+\tag{7}
+\]
+Both pieces are separately integrable on \([0,\infty)\): the first decays
+like \(-\frac1{t^3x^2}\).
+
+For the first piece substitute \(u=tx\):
+\[
+\int_0^\infty\frac{1-x}{1+t^3x^3}\dd x
+=\frac1t\int_0^\infty\frac{\dd u}{1+u^3}
+-\frac1{t^2}\int_0^\infty\frac{u\dd u}{1+u^3}.
+\]
+Both integrals are instances of the beta-type formula
+\[
+\int_0^\infty\frac{u^{s-1}}{1+u^3}\dd u=\frac{\pi/3}{\sin\frac{\pi s}{3}},
+\qquad 0<s<3,
+\tag{8}
+\]
+and \(\sin\frac\pi3=\sin\frac{2\pi}3=\frac{\sqrt3}{2}\), so both equal
+\(\frac{2\pi}{3\sqrt3}=C\). (Formula (8) follows from the standard
+\(\int_0^\infty\frac{u^{s-1}}{1+u^n}\dd u=\frac{\pi/n}{\sin(\pi s/n)}\);
+the coincidence of the two values here is the symmetry \(s\mapsto3-s\).)
+Hence
+\[
+\int_0^\infty\frac{1-x}{1+t^3x^3}\dd x
+=C\left(\frac1t-\frac1{t^2}\right)
+=C\cdot\frac{t-1}{t^2}.
+\]
+Substituting this and (3) into (7),
+\[
+K(t)=\frac{1}{1+t^3}\left[t^3\cdot C\cdot\frac{t-1}{t^2}+C\right]
+=\frac{C\bigl[t(t-1)+1\bigr]}{1+t^3}
+=\frac{C\,(t^2-t+1)}{(1+t)(t^2-t+1)}
+=\frac{C}{1+t},
+\]
+using \(1+t^3=(1+t)(t^2-t+1)\). \(\square\)
+
+Everything turns on the cancellation of \(t^2-t+1\). The numerator
+\(t(t-1)+1\) produced by the two beta integrals is literally the same
+cyclotomic factor that appears in the factorisation of \(1+t^3\); nothing
+survives except the linear factor \(1+t\), which is what makes the
+antiderivative a logarithm.
+
+\section*{4. Conclusion}
+
+Insert (3) and (4) into (2):
+\[
+F'(t)=\frac3t\left[C-\frac{C}{1+t}\right]
+=\frac{3C}{t}\cdot\frac{t}{1+t}
+=\frac{3C}{1+t}
+=\frac{2\pi}{\sqrt3}\cdot\frac1{1+t}.
+\tag{9}
+\]
+Since \(F(0)=0\),
+\[
+F(t)=\int_0^t\frac{2\pi}{\sqrt3}\frac{\dd s}{1+s}
+=\frac{2\pi}{\sqrt3}\log(1+t),
+\]
+that is,
+\[
+\boxed{\displaystyle
+\int_0^\infty\frac{\log(1+t^3x^3)}{1+x+x^2}\dd x
+=\frac{2\pi}{\sqrt3}\log(1+t),\qquad t\ge0 .}
+\tag{10}
+\]
+Setting \(t=1\),
+\[
+\int_0^\infty\frac{\log(1+x^3)}{1+x+x^2}\dd x=\frac{2\pi\log2}{\sqrt3}
+=2.5144598308\ldots,
+\]
+in agreement with numerical quadrature to the displayed precision.
+
+Two consistency checks on (10). As \(t\to0^+\), the left side is
+\(\approx t^3\int_0^\infty\frac{x^3}{1+x+x^2}\dd x\), which diverges,
+while the right side is \(\approx\frac{2\pi t}{\sqrt3}\). There is no
+contradiction, because for small \(t\) the logarithm is only
+\emph{eventually} small: the crossover happens at \(x\sim1/t\), and it is
+the tail beyond it that produces the linear behaviour. As
+\(t\to\infty\), \(\log(1+t^3x^3)\approx3\log t+3\log x\) and
+\(3C\log t=\frac{2\pi}{\sqrt3}\log t\) matches the leading term of
+\(\frac{2\pi}{\sqrt3}\log(1+t)\).
+
+\section*{5. Why \(2\pi/(3\sqrt3)\): the arc behind the measure}
+
+The constant \(C\) is not arbitrary. Let \(\om=\e^{2\pi\ii/3}\), so that
+\(1+x+x^2=(x-\om)(x-\overline\om)\), and set
+\[
+z=\frac{x-\om}{x-\overline\om}.
+\]
+For real \(x\) the two distances \(|x-\om|\) and \(|x-\overline\om|\) are
+equal, so \(|z|=1\): the real line is mapped to the unit circle. Moreover
+\[
+\frac{\dd z}{z}
+=\left(\frac1{x-\om}-\frac1{x-\overline\om}\right)\dd x
+=\frac{\overline\om-\om}{(x-\om)(x-\overline\om)}\dd x
+=\frac{-\ii\sqrt3}{1+x+x^2}\dd x,
+\]
+since \(\om-\overline\om=\ii\sqrt3\). Writing \(z=\e^{\ii\varphi}\),
+\(\frac{\dd z}{z}=\ii\dd\varphi\), so
+\[
+\boxed{\displaystyle
+\frac{\dd x}{1+x+x^2}=-\frac{\dd\varphi}{\sqrt3}.}
+\tag{11}
+\]
+The measure in the problem \emph{is} arclength on the unit circle, scaled
+by \(\frac1{\sqrt3}\).
+
+\begin{center}
+\begin{tikzpicture}[scale=2.6,>=stealth]
+\draw[->] (-1.35,0)--(1.4,0) node[right] {\scriptsize \(\operatorname{Re}z\)};
+\draw[->] (0,-1.3)--(0,1.35) node[above] {\scriptsize \(\operatorname{Im}z\)};
+\draw[dashed] (0,0) circle (1);
+\draw[very thick,domain=-120:0,samples=60] plot ({cos(\x)},{sin(\x)});
+\fill (1,0) circle (0.9pt) node[right] {\scriptsize \(z=1\ (x=\infty)\)};
+\fill ({cos(-120)},{sin(-120)}) circle (0.9pt)
+   node[below left] {\scriptsize \(z=\overline\om\ (x=0)\)};
+\fill ({cos(-60)},{sin(-60)}) circle (0.9pt)
+   node[below right] {\scriptsize \(x=1\)};
+\draw[->] (0.42,0) arc (0:-120:0.42);
+\node at (0.16,-0.52) {\scriptsize \(\tfrac{2\pi}{3}\)};
+\node at (0,-1.5) {\scriptsize total arc \(\tfrac{2\pi}{3}\), hence \(C=\tfrac1{\sqrt3}\cdot\tfrac{2\pi}{3}\)};
+\end{tikzpicture}
+\end{center}
+
+As \(x\) runs from \(0\) to \(\infty\), \(z\) runs from
+\(\frac{-\om}{-\overline\om}=\om^{2}=\overline\om\) to \(1\), covering an
+arc of angular length \(\frac{2\pi}{3}\), exactly one third of the
+circle, because \(\om\) is a primitive cube root of unity. Therefore
+\[
+C=\frac1{\sqrt3}\cdot\frac{2\pi}{3}=\frac{2\pi}{3\sqrt3},
+\]
+recovering (3) with no antiderivative at all. The same picture explains
+why the answer to the whole problem carries a factor \(\frac{\pi}{\sqrt3}\)
+rather than, say, \(\pi\): the \(\sqrt3\) is \(|\om-\overline\om|\), and
+the \(\frac{2\pi}{3}\) is the third of the circle cut out by the
+cyclotomic quadratic.
+
+\section*{6. The pattern for other exponents}
+
+Nothing forces the exponent \(3\). The same three steps, writing
+\(nt^{n-1}x^n=\frac{n}{t}\bigl[(1+t^nx^n)-1\bigr]\), decomposing, and using
+(8), apply whenever the denominator \(Q\) divides \(x^n-1\), since
+that is what made \(\beta\) constant in (5).
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.45}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.24\textwidth}>{\raggedright\arraybackslash}p{0.24\textwidth}X@{}}
+\toprule
+\(Q(x)\) & divides & resulting identity \\
+\midrule
+\(1+x\) & \(x^2-1\) &
+\(\displaystyle\int_0^\infty\frac{\log(1+t^2x^2)}{1+x}\dd x\)
+diverges; the quadratic \(Q\) is needed for convergence. \\
+\addlinespace
+\(1+x+x^2\) & \(x^3-1\) &
+\(\displaystyle\int_0^\infty\frac{\log(1+t^3x^3)}{1+x+x^2}\dd x
+=\frac{2\pi}{\sqrt3}\log(1+t)\). \\
+\addlinespace
+\(1+x^2\) & \(x^4-1\) &
+\(\displaystyle\int_0^\infty\frac{\log(1+t^4x^4)}{1+x^2}\dd x
+=\pi\log(1+\sqrt2\,t+t^2)\), by the same route with
+\(\int_0^\infty\frac{u^{s-1}}{1+u^4}\dd u=\frac{\pi/4}{\sin(\pi s/4)}\). \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+In each case the mechanism is identical: the roots of \(Q\) are roots of
+unity, so \(P\) takes the same value \(1+t^n\) at all of them, the
+correction term \(\alpha\) inherits the factor \(Q\) from
+\(1-x^n\), and the beta integrals supply a numerator that cancels the
+non-linear cyclotomic factor of \(1+t^n\). What is left is always a
+logarithm.
+
+\end{document}

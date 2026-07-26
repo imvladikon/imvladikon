@@ -1,0 +1,265 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper,margin=1.25cm]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\abovedisplayskip}{5pt plus 1pt minus 1pt}
+\setlength{\belowdisplayskip}{5pt plus 1pt minus 1pt}
+\setlength{\abovedisplayshortskip}{3pt plus 1pt minus 1pt}
+\setlength{\belowdisplayshortskip}{3pt plus 1pt minus 1pt}
+
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\xk}{x_k}
+\newcommand{\xkp}{x_{k+1}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries A cubed-radical sum below \(247/2017\)}\\[0.35em]
+{\large two proofs: telescoping after AM--GM, and Jensen against \(x^{-3/2}\)}
+\end{center}
+
+\[
+\boxed{\displaystyle
+\frac1{(1+\sqrt3)^3}
++\frac1{(\sqrt3+\sqrt5)^3}
++\cdots+
+\frac1{(\sqrt{2013}+\sqrt{2015})^3}
+<\frac{247}{2017}.}
+\]
+
+\textbf{Overview.}
+Write
+\[
+x_k=\sqrt{2k-1},\qquad k=1,\dots,1009,
+\]
+so the sum is \(\sum_{k=1}^{1007}(\xk+\xkp)^{-3}\) with
+\(x_1=1\) and \(x_{1008}=\sqrt{2015}\). The whole problem rests on the
+identity
+\[
+\xkp^2-\xk^2=2
+\qquad\Longleftrightarrow\qquad
+(\xkp-\xk)(\xkp+\xk)=2,
+\tag{1}
+\]
+which converts a sum of \emph{reciprocals} into a sum of
+\emph{differences}, the raw material of a telescope. Concretely
+\[
+\frac1{\xk+\xkp}=\frac{\xkp-\xk}{2},
+\qquad\text{hence}\qquad
+\frac1{(\xk+\xkp)^3}=\frac{(\xkp-\xk)^3}{8}.
+\tag{2}
+\]
+From here two routes lead to the bound, and both end at the same place:
+
+\begin{itemize}
+\item[(A)] AM--GM on \((\xk+\xkp)^2>4\xk\xkp\) turns each term into
+\(\frac18\bigl(\frac1{\xk}-\frac1{\xkp}\bigr)\), which telescopes exactly.
+\item[(B)] Jensen for \(t\mapsto t^3\) compares
+\(\bigl(\xkp-\xk\bigr)^3\) with \(\int_{2k-1}^{2k+1}x^{-3/2}\dd x\),
+which telescopes as an integral.
+\end{itemize}
+
+The target constant is engineered: \(\frac{247}{2017}=\frac18\bigl(1-\frac{41}{2017}\bigr)\),
+and \(\frac{41}{2017}\) is a deliberately weakened form of
+\(\frac1{\sqrt{2017}}\), since \(41=\lfloor\sqrt{2017}\rfloor\).
+
+\section*{1. Notation and the basic identity}
+
+Set \(x_k=\sqrt{2k-1}\). Then \(x_1=1\), \(x_2=\sqrt3\), and the sum in
+question is
+\[
+\Sigma=\sum_{k=1}^{1007}\frac1{(\xk+\xkp)^3},
+\qquad
+\xk+\xkp=\sqrt{2k-1}+\sqrt{2k+1},
+\]
+the last term being \(k=1007\), i.e. \((\sqrt{2013}+\sqrt{2015})^{-3}\),
+as stated.
+
+Since \(\xkp^2-\xk^2=(2k+1)-(2k-1)=2\), we obtain (1) and hence (2). This
+already rationalises the denominators: instead of a sum of reciprocals of
+sums of surds, we have a sum of cubes of small differences.
+
+\section*{2. Proof A: AM--GM and an exact telescope}
+
+For \(k\ge1\) the numbers \(\xk\ne\xkp\) are positive, so AM--GM is
+strict:
+\[
+\frac{\xk+\xkp}{2}>\sqrt{\xk\xkp}
+\qquad\Longrightarrow\qquad
+(\xk+\xkp)^2>4\,\xk\xkp
+\qquad\Longrightarrow\qquad
+\frac1{(\xk+\xkp)^2}<\frac1{4\xk\xkp}.
+\tag{3}
+\]
+Multiply (3) by \(\frac1{\xk+\xkp}\) and use (2):
+\[
+\frac1{(\xk+\xkp)^3}
+<\frac1{4\xk\xkp(\xk+\xkp)}
+=\frac{\xkp-\xk}{8\,\xk\xkp}
+=\frac18\left(\frac1{\xk}-\frac1{\xkp}\right).
+\tag{4}
+\]
+The right-hand side is a pure difference: the sum telescopes.
+
+It is convenient to add one further term, which is positive and therefore
+harmless, so that the telescope ends at \(x_{1009}=\sqrt{2017}\), the
+number appearing in the answer:
+\[
+\Sigma<\sum_{k=1}^{1008}\frac1{(\xk+\xkp)^3}
+<\frac18\sum_{k=1}^{1008}\left(\frac1{\xk}-\frac1{\xkp}\right)
+=\frac18\left(\frac1{x_1}-\frac1{x_{1009}}\right)
+=\frac18\left(1-\frac1{\sqrt{2017}}\right).
+\tag{5}
+\]
+
+It remains to weaken \(\frac1{\sqrt{2017}}\) into a rational number.
+Since \(41^2=1681<2017\), we have \(\sqrt{2017}>41\) and therefore
+\[
+\frac1{\sqrt{2017}}=\frac{\sqrt{2017}}{2017}>\frac{41}{2017}.
+\]
+Subtracting a larger quantity gives a smaller result, so from (5)
+\[
+\Sigma<\frac18\left(1-\frac{41}{2017}\right)
+=\frac18\cdot\frac{1976}{2017}
+=\frac{247}{2017},
+\]
+using \(1976=8\cdot247\). \(\square\)
+
+\section*{3. Proof B: Jensen against the integral of \(x^{-3/2}\)}
+
+The second proof replaces AM--GM by convexity and the telescope by the
+additivity of an integral.
+
+Since \(\frac{\dd}{\dd x}\sqrt x=\frac1{2\sqrt x}\),
+\[
+\xkp-\xk=\int_{2k-1}^{2k+1}\frac{\dd x}{2\sqrt x},
+\tag{6}
+\]
+an integral over an interval of length \(2\). Let
+\(g(x)=\frac1{2\sqrt x}\) and apply Jensen's inequality in integral form
+to the convex function \(\Phi(t)=t^3\) on \((0,\infty)\):
+\[
+\Phi\!\left(\frac1{b-a}\int_a^b g\right)\le\frac1{b-a}\int_a^b\Phi(g),
+\]
+with strict inequality because \(g\) is non-constant and \(\Phi\) is
+strictly convex. With \(a=2k-1\), \(b=2k+1\), \(b-a=2\), and using (6),
+\[
+\left(\frac{\xkp-\xk}{2}\right)^3
+<\frac12\int_{2k-1}^{2k+1}\frac{\dd x}{8x^{3/2}}
+=\frac1{16}\int_{2k-1}^{2k+1}x^{-3/2}\dd x .
+\]
+By (2) the left-hand side is exactly \(\frac1{(\xk+\xkp)^3}\), so
+\[
+\boxed{\displaystyle
+\frac1{(\xk+\xkp)^3}<\frac1{16}\int_{2k-1}^{2k+1}x^{-3/2}\dd x .}
+\tag{7}
+\]
+Summing (7) for \(k=1,\dots,1007\), the intervals
+\([1,3],[3,5],\dots,[2013,2015]\) tile \([1,2015]\) exactly:
+\[
+\Sigma<\frac1{16}\int_1^{2015}x^{-3/2}\dd x
+=\frac1{16}\Bigl[-2x^{-1/2}\Bigr]_1^{2015}
+=\frac18\left(1-\frac1{\sqrt{2015}}\right).
+\tag{8}
+\]
+Finally \(45^2=2025>2015\) gives \(\sqrt{2015}<45\), so
+\[
+\frac1{\sqrt{2015}}>\frac1{45}=0.0222\ldots>\frac{41}{2017}=0.0203\ldots,
+\]
+and (8) yields
+\[
+\Sigma<\frac18\left(1-\frac{41}{2017}\right)=\frac{247}{2017}. \qquad\square
+\]
+
+\section*{4. How much room there is}
+
+Both proofs are comfortable. The table below shows by how much.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.40\textwidth}XX@{}}
+\toprule
+Quantity & Exact form & Value \\
+\midrule
+The sum \(\Sigma\) itself
+& --
+& \(0.1180514\ldots\) \\
+Proof B bound, (8)
+& \(\frac18\bigl(1-\tfrac1{\sqrt{2015}}\bigr)\)
+& \(0.1222153\ldots\) \\
+Proof A bound, (5)
+& \(\frac18\bigl(1-\tfrac1{\sqrt{2017}}\bigr)\)
+& \(0.1222167\ldots\) \\
+Target
+& \(\frac{247}{2017}\)
+& \(0.1224591\ldots\) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+So the analytic bounds give about \(0.12222\), against a target of
+\(0.12246\): the final rational weakening costs only \(2.4\cdot10^{-4}\),
+while the inequality itself has about \(3.5\%\) of slack. The margin is
+thin enough that the crude step, replacing \(\sqrt{2017}\) by \(41\),
+must be done in the right direction, but comfortable enough that no
+sharper estimate is needed.
+
+Note that the two bounds (5) and (8) are numerically almost identical
+even though they were obtained by different means and end at different
+square roots. That is not a coincidence: both are the same telescoping
+estimate of \(\sum\frac18\bigl(x_k^{-1}-x_{k+1}^{-1}\bigr)\), one
+performed discretely and one performed as \(\frac1{16}\int x^{-3/2}\),
+and the two differ only by one endpoint's worth of the tail.
+
+\section*{5. What each proof really uses}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.45}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.22\textwidth}XX@{}}
+\toprule
+& Proof A & Proof B \\
+\midrule
+Key inequality
+& AM--GM: \((\xk+\xkp)^2>4\xk\xkp\)
+& Jensen: \(\bigl(\text{mean of }g\bigr)^3<\text{mean of }g^3\) \\
+\addlinespace
+Telescoping device
+& \(\dfrac{\xkp-\xk}{\xk\xkp}=\dfrac1{\xk}-\dfrac1{\xkp}\)
+& additivity of \(\displaystyle\int_1^{2015}\) over the intervals \([2k-1,2k+1]\) \\
+\addlinespace
+Where the exponent \(3\) enters
+& once, as the extra factor \(\frac1{\xk+\xkp}\) beyond the squared AM--GM
+& directly, as the convex \(\Phi(t)=t^3\) \\
+\addlinespace
+Generalises to exponent \(p\)?
+& only for \(p=3\) in this clean form
+& yes: \(\frac1{(\xk+\xkp)^p}<\frac1{2^{p+1}}\displaystyle\int_{2k-1}^{2k+1}x^{-p/2}\dd x\) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+The last row is the real advantage of Proof B. Repeating Section 3
+verbatim with \(\Phi(t)=t^p\), \(p>1\), gives for every \(n\)
+\[
+\sum_{k=1}^{n}\frac1{\bigl(\sqrt{2k-1}+\sqrt{2k+1}\bigr)^{p}}
+<\frac1{2^{p+1}}\int_1^{2n+1}x^{-p/2}\dd x
+=\frac1{2^{p+1}}\cdot\frac{2}{p-2}\left(1-(2n+1)^{1-p/2}\right)
+\]
+for \(p\ne2\), so the series converges precisely for \(p>2\); at
+\(p=3\) the bound is \(\frac18\bigl(1-(2n+1)^{-1/2}\bigr)\), recovering
+(8). The exponent \(3\) in the problem is thus the smallest odd integer
+for which the sum converges, and the closed form \(\frac18\) of the
+limiting bound is what makes a clean rational target possible.
+
+\end{document}

@@ -1,0 +1,248 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper,margin=1.25cm]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\abovedisplayskip}{5pt plus 1pt minus 1pt}
+\setlength{\belowdisplayskip}{5pt plus 1pt minus 1pt}
+\setlength{\abovedisplayshortskip}{3pt plus 1pt minus 1pt}
+\setlength{\belowdisplayshortskip}{3pt plus 1pt minus 1pt}
+
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\An}{A_n}
+\newcommand{\Bn}{B_n}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries A logarithmic convolution}\\[0.35em]
+{\large almost every index has \(\log k\approx\log n\)}
+\end{center}
+
+\[
+\boxed{\displaystyle
+\lim_{n\to\infty}
+\frac{\log^2 n}{n}\sum_{k=2}^{n-2}\frac1{\log k\,\log(n-k)}
+=1 .}
+\]
+
+\textbf{Overview.}
+Put
+\[
+x_k=\frac{\log n}{\log k},\qquad 2\le k\le n-2,
+\qquad\text{so that}\qquad
+\An:=\frac{\log^2n}{n}\sum_{k=2}^{n-2}\frac1{\log k\,\log(n-k)}
+=\frac1n\sum_{k=2}^{n-2}x_kx_{n-k}.
+\]
+Every \(x_k\ge1\), which gives the lower bound at once. For the upper
+bound, Cauchy--Schwarz plus the reflection \(k\mapsto n-k\) replaces the
+product \(x_kx_{n-k}\) by \(x_k^2\), and then the key structural fact
+takes over: for any \(\alpha<1\), all but \(n^{\alpha}\) of the indices
+satisfy \(k\ge n^{\alpha}\), hence \(\log k\ge\alpha\log n\) and
+\(x_k\le\frac1\alpha\). The exceptional indices are so few, a power of
+\(n\) below \(n\), that even the worst possible value
+\(x_2=\frac{\log n}{\log2}\) cannot rescue them.
+
+In words: the logarithm is so slowly varying that \emph{almost every}
+\(k\le n\) has \(\log k\) essentially equal to \(\log n\), so the sum has
+\(n\) terms each essentially equal to \(\frac1{\log^2n}\).
+
+\section*{1. Notation and the lower bound}
+
+For \(2\le k\le n-2\) both \(k\le n\) and \(n-k\le n\), so
+\(\log k\le\log n\) and \(\log(n-k)\le\log n\), whence
+\[
+x_k=\frac{\log n}{\log k}\ge1,
+\qquad
+x_{n-k}=\frac{\log n}{\log(n-k)}\ge1 .
+\tag{1}
+\]
+Therefore each of the \(n-3\) summands of
+\[
+\An=\frac1n\sum_{k=2}^{n-2}x_kx_{n-k}
+\tag{2}
+\]
+is at least \(1\), and
+\[
+\boxed{\displaystyle \An\ge\frac{n-3}{n}.}
+\tag{3}
+\]
+In particular \(\liminf_n\An\ge1\). The whole problem is the matching
+upper bound.
+
+\section*{2. Removing the convolution by Cauchy--Schwarz}
+
+Apply the Cauchy--Schwarz inequality to (2):
+\[
+\sum_{k=2}^{n-2}x_kx_{n-k}
+\le\sqrt{\left(\sum_{k=2}^{n-2}x_k^2\right)
+\left(\sum_{k=2}^{n-2}x_{n-k}^2\right)} .
+\]
+The substitution \(k\mapsto n-k\) is a bijection of the index range
+\(\{2,\dots,n-2\}\) onto itself, so the two factors are equal and
+\[
+\An\le\Bn:=\frac1n\sum_{k=2}^{n-2}x_k^2
+=\frac{\log^2n}{n}\sum_{k=2}^{n-2}\frac1{\log^2k}.
+\tag{4}
+\]
+By the same reasoning as (1), also \(\Bn\ge\frac{n-3}{n}\). The
+convolution structure has been removed at no cost: it remains to show
+\(\Bn\to1\).
+
+\section*{3. The upper bound: splitting at \(n^{\alpha}\)}
+
+Fix \(\alpha\in(0,1)\) and split the index range at \(n^{\alpha}\):
+\[
+\Bn=\frac1n\sum_{2\le k<n^{\alpha}}x_k^2+\frac1n\sum_{n^{\alpha}\le k\le n-2}x_k^2 .
+\tag{5}
+\]
+
+\textbf{Small indices.} There are fewer than \(n^{\alpha}\) of them, and
+the largest possible value of \(x_k\) on the whole range is
+\(x_2=\frac{\log n}{\log2}\). Hence
+\[
+\frac1n\sum_{2\le k<n^{\alpha}}x_k^2
+\le\frac{n^{\alpha}}{n}\left(\frac{\log n}{\log2}\right)^2
+=n^{\alpha-1}\left(\frac{\log n}{\log2}\right)^2
+\xrightarrow[n\to\infty]{}0,
+\tag{6}
+\]
+since \(\alpha-1<0\) and a power beats a square of a logarithm.
+
+\textbf{Large indices.} If \(k\ge n^{\alpha}\) then
+\(\log k\ge\alpha\log n\), so \(x_k\le\frac1\alpha\) and
+\[
+\frac1n\sum_{n^{\alpha}\le k\le n-2}x_k^2
+\le\frac1n\cdot n\cdot\frac1{\alpha^2}
+=\frac1{\alpha^2}.
+\tag{7}
+\]
+
+Now let \(\varepsilon>0\). Choose \(\alpha<1\) close enough to \(1\) that
+\[
+\frac1{\alpha^2}<1+\frac\varepsilon2 ,
+\]
+and then \(N\) so large that for \(n\ge N\) both
+\[
+n^{\alpha-1}\left(\frac{\log n}{\log2}\right)^2<\frac\varepsilon2
+\qquad\text{and}\qquad
+\frac{n-3}{n}>1-\varepsilon .
+\]
+Combining (3), (4), (5), (6), (7), for every \(n\ge N\)
+\[
+1-\varepsilon<\frac{n-3}{n}\le\An\le\Bn
+\le\frac\varepsilon2+\frac1{\alpha^2}<1+\varepsilon .
+\]
+Since \(\varepsilon\) was arbitrary,
+\[
+\boxed{\displaystyle
+\lim_{n\to\infty}\Bn=1
+\qquad\text{and}\qquad
+\lim_{n\to\infty}\An=1 .}
+\]
+
+Note the order of the choices: \(\alpha\) is selected from
+\(\varepsilon\) first, and only then is \(N\) selected from both. The
+exponent \(\alpha\) is a free parameter that trades the two error terms
+against each other: pushing \(\alpha\) towards \(1\) improves (7) and
+worsens (6), but (6) has a power of \(n\) to spend and always wins.
+
+\section*{4. How slow the convergence is}
+
+The proof gives no useful rate, and for good reason: the true rate is
+logarithmic.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{0.9\textwidth}{@{}lXXX@{}}
+\toprule
+\(n\) & \(\An\) & \(\An-1\) & \(2/\log n\) \\
+\midrule
+\(10^2\) & \(1.7792\) & \(0.7792\) & \(0.4343\) \\
+\(10^3\) & \(1.4603\) & \(0.4603\) & \(0.2895\) \\
+\(10^4\) & \(1.3002\) & \(0.3002\) & \(0.2171\) \\
+\(10^5\) & \(1.2204\) & \(0.2204\) & \(0.1737\) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+At \(n=10^5\) the sequence is still \(22\%\) above its limit. The reason
+is visible from a continuous model. Write \(k=tn\) with \(t\in(0,1)\) and
+\(L=\log n\); then
+\[
+\log k=L+\log t,
+\qquad
+x_k=\frac{L}{L+\log t}=\frac1{1+\frac{\log t}{L}}
+\approx1-\frac{\log t}{L},
+\]
+and similarly for \(x_{n-k}\) with \(t\) replaced by \(1-t\). Hence
+\[
+x_kx_{n-k}\approx1-\frac{\log t+\log(1-t)}{L},
+\]
+and averaging over \(t\in(0,1)\), using
+\(\int_0^1(-\log t)\dd t=\int_0^1(-\log(1-t))\dd t=1\),
+\[
+\boxed{\displaystyle \An\approx1+\frac2{\log n}.}
+\tag{8}
+\]
+The last column of the table is this prediction. It captures the right
+order of magnitude and the right constant asymptotically, though at these
+values of \(n\) the neglected \(O(\log^{-2}n)\) term is still comparable
+to the main correction, which is what one expects when the
+expansion parameter is \(1/\log n\approx0.09\) at \(n=10^5\).
+
+\section*{5. What made it work}
+
+The only property of \(\log\) used in Section 3 was
+\[
+\log(n^{\alpha})=\alpha\log n ,
+\tag{9}
+\]
+i.e. that the logarithm of a fixed power of \(n\) is a fixed fraction of
+\(\log n\). This is what forces \(x_k\) to be uniformly bounded on all
+but a negligible set of indices, and it is a statement about slow
+variation, not about the logarithm specifically.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.45}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.28\textwidth}X@{}}
+\toprule
+Weight \(w(k)\) & Behaviour of \(\dfrac{w(n)^2}{n}\sum_{k}\dfrac1{w(k)w(n-k)}\) \\
+\midrule
+\(w(k)=\log k\)
+& Limit \(1\), by the argument above. \\
+\addlinespace
+\(w(k)=\log^{p}k\), \(p>0\)
+& Limit \(1\): \(\bigl(\frac{\log n}{\log k}\bigr)^{p}\le\alpha^{-p}\) on
+\(k\ge n^{\alpha}\), and the small-index block is still killed by
+\(n^{\alpha-1}\log^{2p}n\to0\). \\
+\addlinespace
+\(w(k)=k^{\beta}\), \(\beta>0\)
+& \emph{Not} \(1\): here \(\frac{w(n)^2}{w(k)w(n-k)}=\bigl(t(1-t)\bigr)^{-\beta}\)
+does not concentrate, and the limit is the Beta integral
+\(\int_0^1 t^{-\beta}(1-t)^{-\beta}\dd t=B(1-\beta,1-\beta)\)
+for \(0<\beta<1\), diverging for \(\beta\ge1\). \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+The contrast in the last row is the point of the problem. For a power
+weight the rescaled summand is a genuine function of \(t=k/n\) and the
+limit is a Riemann integral, generally not \(1\). For a logarithmic
+weight the rescaled summand converges to the constant \(1\) for
+\emph{every} fixed \(t\in(0,1)\), and the limit is \(\int_0^1 1\dd t=1\).
+Formula (8) is the first correction to that degeneracy, and it is the
+Riemann integral of \(-\log t-\log(1-t)\), divided by \(\log n\).
+
+\end{document}

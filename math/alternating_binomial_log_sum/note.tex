@@ -1,0 +1,297 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper,margin=1.25cm]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\abovedisplayskip}{5pt plus 1pt minus 1pt}
+\setlength{\belowdisplayskip}{5pt plus 1pt minus 1pt}
+\setlength{\abovedisplayshortskip}{3pt plus 1pt minus 1pt}
+\setlength{\belowdisplayshortskip}{3pt plus 1pt minus 1pt}
+
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\Sn}{S_n}
+\newcommand{\Tn}{T_n}
+\newcommand{\In}{I_n}
+\newcommand{\D}{\Delta}
+\newcommand{\Hh}{H}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries An alternating binomial sum of logarithms}\\[0.35em]
+{\large a high finite difference is a tiny integral}
+\end{center}
+
+\[
+\boxed{\displaystyle
+\Sn=\sum_{k=1}^{n-1}(-1)^k\binom nk\log(k+1)
+=(-1)^{n+1}\log(n+1)-\In,
+\qquad
+\In=\int_0^1\frac{(1-x)^n}{-\log x}\dd x,}
+\]
+\[
+\boxed{\displaystyle
+\In=\frac1{n\log n}\left(1-\frac{\gamma}{\log n}
++O\!\left(\frac1{\log^2 n}\right)\right),
+\qquad 0<\In<\frac1n .}
+\]
+
+\textbf{Overview.}
+The alternating binomial coefficients are the \(n\)-th finite difference
+operator in disguise:
+\[
+\D^{n}a_0=\sum_{j=0}^{n}(-1)^{n-j}\binom nj a_j .
+\]
+Applying this to \(a_m=\log(m+1)\), the \emph{completed} sum
+\(\Tn=\sum_{k=0}^{n}(-1)^k\binom nk\log(k+1)\) is exactly
+\((-1)^n\D^n a_0\). High-order differences of a slowly growing smooth
+function are small, essentially because \(\log\) is nearly a
+polynomial of low degree on any short scale. Here the smallness is
+quantified exactly: \(\Tn=-\In\) with \(\In\) an explicit positive
+integral of size \(\frac1{n\log n}\).
+
+The sum \(\Sn\) of the problem omits the terms \(k=0\) (which is
+\(\log1=0\)) and \(k=n\) (which is \((-1)^n\log(n+1)\)), so
+\[
+\Sn=\Tn-(-1)^n\log(n+1)=(-1)^{n+1}\log(n+1)-\In .
+\]
+Thus \(\Sn\) is dominated by the single omitted term \(\pm\log(n+1)\),
+corrected by a quantity that vanishes like \(\frac1{n\log n}\).
+
+Two independent derivations of \(\In\) are given: a discrete one, through
+the finite-difference calculus of \(\frac1{m+\alpha}\), and a continuous
+one, through the Frullani-type representation of \(\log(k+1)\). The first
+gives the sharp elementary bound \(\In<\frac1n\); the second explains why
+Euler's constant appears in the second-order term.
+
+\section*{1. The sum is a finite difference}
+
+Let \(a_m=\log(m+1)\) and \(\D a_m=a_{m+1}-a_m\). Iterating and using
+Pascal's rule \(\binom{r+1}{j}=\binom rj+\binom r{j-1}\),
+\[
+\D^{r}a_m=\sum_{j=0}^{r}(-1)^{r-j}\binom rj a_{m+j}.
+\tag{1}
+\]
+Setting \(m=0\), \(r=n\) and multiplying by \((-1)^n\),
+\[
+\Tn:=\sum_{k=0}^{n}(-1)^k\binom nk\log(k+1)=(-1)^n\D^{n}a_0 .
+\tag{2}
+\]
+The sum of the problem omits the two extreme terms:
+\[
+k=0:\ \log1=0,
+\qquad
+k=n:\ (-1)^n\log(n+1),
+\]
+so
+\[
+\boxed{\displaystyle \Sn=\Tn-(-1)^n\log(n+1).}
+\tag{3}
+\]
+Everything therefore reduces to showing that \(\Tn\) is small, i.e. that
+the \(n\)-th finite difference of \(\log(m+1)\) at \(m=0\) is small.
+
+\section*{2. Discrete evaluation: the harmonic ruler}
+
+Write the first difference as an average:
+\[
+\D a_m=\log\left(1+\frac1{m+1}\right)=\int_0^1\frac{\dd t}{m+1+t}.
+\tag{4}
+\]
+This is the key step: it expresses \(\D a_m\) as a superposition of the
+elementary sequences \(m\mapsto\frac1{m+\alpha}\), for which the finite
+differences are known exactly:
+\[
+(-1)^{r}\D^{r}\frac1{m+\alpha}\bigg|_{m=0}
+=\frac{r!}{\alpha(\alpha+1)\cdots(\alpha+r)},
+\qquad\alpha>0 .
+\tag{5}
+\]
+(Immediate by induction, since
+\(\frac1{m+\alpha}-\frac1{m+1+\alpha}=\frac1{(m+\alpha)(m+1+\alpha)}\).)
+
+Applying \(\D^{n-1}\) to (4) and using (5) with \(\alpha=1+t\),
+\(r=n-1\),
+\[
+\In:=(-1)^{n-1}\D^{n}a_0
+=\int_0^1\frac{(n-1)!\dd t}{(1+t)(2+t)\cdots(n+t)} .
+\tag{6}
+\]
+By (2), \(\Tn=-\In\), which with (3) gives the first boxed formula.
+
+Since the integrand of (6) is positive and, for \(t\in[0,1]\), bounded by
+its value at \(t=0\),
+\[
+\boxed{\displaystyle
+0<\In<\frac{(n-1)!}{1\cdot2\cdots n}=\frac1n .}
+\tag{7}
+\]
+
+\textbf{The harmonic ruler.} Bound (7) is best understood by comparison
+with the harmonic numbers. Let \(\Hh_0=0\) and
+\(\Hh_m=1+\frac12+\cdots+\frac1m\), so that
+\(\D \Hh_m=\frac1{m+1}\). By (5) with \(\alpha=1\),
+\[
+(-1)^{n-1}\D^{n}\Hh_0=\frac1n .
+\tag{8}
+\]
+Comparing (4) with \(\D \Hh_m=\frac1{m+1}\): the logarithm's first
+difference is the \emph{average} of \(\frac1{m+1+t}\) over
+\(t\in[0,1]\), hence strictly smaller than \(\frac1{m+1}\). Since all the
+relevant differences carry the same alternating sign, the same ordering
+persists at order \(n\), which is exactly (7). In words: \(\log(m+1)\)
+and \(\Hh_m\) have the same alternating-difference structure, and the
+logarithm sits below the harmonic ruler.
+
+\section*{3. Continuous evaluation: a Frullani representation}
+
+An independent route gives a form better suited to asymptotics. For
+integers \(k\ge0\),
+\[
+\log(k+1)=\int_0^1\frac{1-x^k}{-\log x}\dd x,
+\tag{9}
+\]
+which is the Frullani integral \(\int_0^1\frac{x^{b}-x^{a}}{\log x}\dd x
+=\log\frac{b+1}{a+1}\) at \(a=0\), \(b=k\).
+
+Insert (9) into \(\Tn\) and exchange the finite sum with the integral.
+Since \(\sum_{k=0}^{n}(-1)^k\binom nk=0\) for \(n\ge1\) and
+\(\sum_{k=0}^{n}(-1)^k\binom nk x^k=(1-x)^n\),
+\[
+\Tn=\int_0^1\frac{0-(1-x)^n}{-\log x}\dd x
+=-\int_0^1\frac{(1-x)^n}{-\log x}\dd x .
+\]
+Hence
+\[
+\boxed{\displaystyle
+\In=\int_0^1\frac{(1-x)^n}{-\log x}\dd x
+=\int_0^1\frac{(n-1)!\dd t}{(1+t)(2+t)\cdots(n+t)} ,}
+\tag{10}
+\]
+the two representations agreeing, as one checks numerically to full
+precision for any \(n\).
+
+\section*{4. Asymptotics: where \(\gamma\) comes from}
+
+Use the integral representation. Substituting \(x=\frac yn\) and writing
+\(L=\log n\),
+\[
+\In=\frac1n\int_0^n\frac{(1-y/n)^n}{L-\log y}\dd y .
+\tag{11}
+\]
+Two expansions now govern the answer:
+\[
+(1-y/n)^n\longrightarrow\e^{-y},
+\qquad
+\frac1{L-\log y}=\frac1L\left(1+\frac{\log y}{L}
++O\!\left(\frac{\log^2 y}{L^2}\right)\right).
+\tag{12}
+\]
+Therefore
+\[
+\In=\frac1{nL}\left(
+\int_0^\infty \e^{-y}\dd y
++\frac1L\int_0^\infty \e^{-y}\log y\dd y
++O\!\left(\frac1{L^2}\right)\right).
+\]
+The two integrals are classical:
+\[
+\int_0^\infty \e^{-y}\dd y=1,
+\qquad
+\int_0^\infty \e^{-y}\log y\dd y=\Gamma'(1)=-\gamma .
+\tag{13}
+\]
+Hence
+\[
+\boxed{\displaystyle
+\In=\frac1{n\log n}\left(1-\frac{\gamma}{\log n}
++O\!\left(\frac1{\log^2 n}\right)\right).}
+\tag{14}
+\]
+
+\textbf{The same constant, discretely.} Formula (6) reproduces (14)
+without any Gamma function. Factoring out \((n-1)!\),
+\[
+\In=\frac1n\int_0^1\prod_{r=1}^{n}\left(1+\frac tr\right)^{-1}\dd t
+=\frac1n\int_0^1\exp\left(-\sum_{r=1}^{n}\log\left(1+\frac tr\right)\right)\dd t,
+\tag{15}
+\]
+and for \(0\le t\le1\),
+\[
+\sum_{r=1}^{n}\log\left(1+\frac tr\right)=t\,\Hh_n+O(t^2).
+\]
+The integrand is therefore concentrated on \(t\asymp \Hh_n^{-1}\);
+substituting \(t=u/\Hh_n\),
+\[
+\In=\frac1{n\Hh_n}\int_0^{\Hh_n}\e^{-u}
+\exp\!\left(O\!\left(\frac{u^2}{\Hh_n^2}\right)\right)\dd u
+=\frac1{n\Hh_n}\left(1+O\!\left(\frac1{\Hh_n^{2}}\right)\right).
+\tag{16}
+\]
+Expanding \(\Hh_n=\log n+\gamma+O(n^{-1})\) turns (16) into (14). So the
+\(\gamma\) in the second-order term is, on the discrete side, nothing but
+\(\Hh_n-\log n\to\gamma\), and on the continuous side the value
+\(\Gamma'(1)\). The two occurrences are the same constant seen from the
+two ends of (10).
+
+\section*{5. Numerical check}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{0.95\textwidth}{@{}lXXXX@{}}
+\toprule
+\(n\) & \(\In\) (exact) & \(\frac1{n\log n}\bigl(1-\frac\gamma{\log n}\bigr)\) & \(\frac1{n\Hh_n}\) & bound \(\frac1n\) \\
+\midrule
+\(5\)    & \(0.0871265\)   & \(0.0796993\)   & \(0.0875912\)   & \(0.2\) \\
+\(20\)   & \(0.0145850\)   & \(0.0134745\)   & \(0.0138976\)   & \(0.05\) \\
+\(100\)  & \(0.00201125\)  & \(0.00189930\)  & \(0.00192776\)  & \(0.01\) \\
+\(1000\) & \(0.000137012\) & \(0.000132668\) & \(0.000133592\) & \(0.001\) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+The discrete approximation \(\frac1{n\Hh_n}\) of (16) is visibly better
+than the two-term logarithmic expansion (14), which is expected: the
+expansion parameter of (14) is \(\frac1{\log n}\), still \(0.14\) at
+\(n=1000\), whereas (16) resums the whole harmonic number.
+
+\section*{6. Summary of the identity}
+
+Collecting (3), (10) and (14),
+\[
+\Sn=\sum_{k=1}^{n-1}(-1)^k\binom nk\log(k+1)
+=(-1)^{n+1}\log(n+1)
+-\frac1{n\log n}\left(1-\frac{\gamma}{\log n}
++O\!\left(\frac1{\log^2 n}\right)\right).
+\]
+
+
+\textbf{The sum is not small; the completed sum is.} \(\Sn\) grows like
+\(\log n\) in absolute value and alternates in sign with \(n\), whereas
+\(\Tn=\Sn+(-1)^n\log(n+1)\) tends to \(0\). Completing the sum by the
+term \(k=n\) is what turns it into a finite difference; the binomial
+coefficients only form a difference operator when the full range is
+present.
+
+\textbf{The cancellation is enormous.} The individual terms of \(\Tn\)
+reach size \(\binom{n}{n/2}\log n\approx2^n\), while the total is
+\(\frac1{n\log n}\). Formula (10) explains the mechanism: the alternating
+sum of \(x^k\) with binomial weights is \((1-x)^n\), which is
+exponentially small everywhere except near \(x=0\), where the factor
+\(\frac1{-\log x}\) is itself small. The competition between these two
+factors, resolved in Section 4, produces the scale
+\(\frac1{n\log n}\): an algebraic \(\frac1n\) from the width of the
+region where \((1-x)^n\) survives, and a logarithmic \(\frac1{\log n}\)
+from the weight there.
+
+\end{document}
